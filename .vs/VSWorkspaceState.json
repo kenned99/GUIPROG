@@ -1,7 +1,9 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\H3GUI",
+    "\\H3GUI\\Pages"
   ],
-  "SelectedNode": "\\index.php",
+  "SelectedNode": "\\H3GUI\\H3GUI.csproj",
   "PreviewInSolutionExplorer": false
 }
