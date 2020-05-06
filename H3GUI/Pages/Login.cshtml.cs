@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using ServerSide;
 using ServerSide.Model;
+using Microsoft.AspNetCore.Http;
+using System.Text.Json.Serialization;
 
 namespace H3GUI.Pages
 {
@@ -69,7 +71,11 @@ namespace H3GUI.Pages
             Member = serverSideAccess.GetMemberByName(Username);
             if (Member != null && Member.Password == EncryptPassword(Password, Member.salt))
             {
-                TempData.Add("LastAction", "SUCC");
+
+                var json = Newtonsoft.Json.JsonConvert.SerializeObject(Member);
+
+                TempData.Add("LastAction", json);
+
                 return Page();
                 //TODO: Login functionality
             }
