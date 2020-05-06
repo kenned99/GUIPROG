@@ -22,14 +22,7 @@ namespace H3GUI.Pages
 
         public IActionResult OnGet()
         {
-
-            var data = HttpContext.Session;
-            if ( true == null)
-            {
-                return RedirectToPage("./login");
-            }
-            return Page();
-            
+            var json = Newtonsoft.Json.JsonConvert.SerializeObject(Member);
         }
     }
 }

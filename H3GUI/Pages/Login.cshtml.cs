@@ -72,13 +72,9 @@ namespace H3GUI.Pages
             if (Member != null && Member.Password == EncryptPassword(Password, Member.salt))
             {
 
-
-                HttpContext.Session.SetInt32("SessionKey", Member.Id);
                 var json = Newtonsoft.Json.JsonConvert.SerializeObject(Member);
 
                 TempData.Add("LastAction", json);
-
-
 
                 return Page();
                 //TODO: Login functionality
