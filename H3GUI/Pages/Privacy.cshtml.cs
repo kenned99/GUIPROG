@@ -22,7 +22,7 @@ namespace H3GUI.Pages
 
         public IActionResult OnGet()
         {
-
+            return Page();
         }
     }
 }
