@@ -7,7 +7,7 @@ namespace ServerSide.Model
 {
     public class Member
     {
-        public uint Id { get; set; }
+        public int Id { get; set; }
 
         [Required]
         [StringLength(60, MinimumLength = 2)]
@@ -17,5 +17,7 @@ namespace ServerSide.Model
 
         [Required]
         public string Password { get; set; }
+
+        public Byte[] salt { get; set; }
     }
 }

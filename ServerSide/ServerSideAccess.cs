@@ -26,13 +26,18 @@ namespace ServerSide
         }
 
 
-        public IEnumerable<Member> GetMemberByName(string name = null)
+        public IEnumerable<Member> GetMembersByName(string name = null)
         {
             var query = from d in db.Members
                         where d.Username.StartsWith(name) || string.IsNullOrEmpty(name)
                         orderby d.Username
                         select d;
             return query;
+        }
+
+        public Member GetMemberByName(string Username)
+        {
+            return db.Members.Where(x => x.Username == Username).FirstOrDefault();
         }
 
         public Member AddMember(Member NewPerson)

@@ -8,7 +8,7 @@ namespace ServerSide.Model
 {
     public class GpsLocation
     {
-        public uint Id { get; set; }
+        public int Id { get; set; }
 
         [Required]
         public decimal Longtitude { get; set; }
