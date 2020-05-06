@@ -22,7 +22,7 @@ namespace H3GUI.Pages
 
         public IActionResult OnGet()
         {
-            var json = Newtonsoft.Json.JsonConvert.SerializeObject(Member);
+
         }
     }
 }
