@@ -70,7 +70,7 @@ namespace H3GUI.Pages
             if (Member != null && Member.Password == EncryptPassword(Password, Member.salt))
             {
                 TempData.Add("LastAction", "SUCC");
-                return Page();
+                return RedirectToPage("./Privacy");
                 //TODO: Login functionality
             }
             TempData.Add("LastAction", "FAIL");
