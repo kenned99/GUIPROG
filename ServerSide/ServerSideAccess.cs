@@ -8,6 +8,7 @@ namespace ServerSide
 {
     public class ServerSideAccess : IServerSideAccess
     {
+        //Initial DB Setup
         private readonly MembersDBContext db;
 
         public ServerSideAccess(MembersDBContext db)
@@ -20,6 +21,7 @@ namespace ServerSide
             return db.SaveChanges();
         }
 
+        //Member stuff
         public Member GetMember(int Id)
         {
             return db.Members.Find(Id);
@@ -61,6 +63,26 @@ namespace ServerSide
                 return 1;
             }
             return 0;
+        }
+
+        //GPS stuff
+        public int UpdateLocation(GpsLocation GpsLocation, Member Member)
+        {
+            Member.LastKnownLocation = GpsLocation;
+            UpdateMember(Member);
+            return 1;
+        }
+
+        //Message stuff
+        public Message SendMessage(int SenderID, int RecipientID, string MessageText)
+        {
+            Message Message = new Message();
+            Message.SenderPersonId = SenderID;
+            Message.RecipientPersonId = RecipientID;
+            Message.MessageText = MessageText;
+
+            db.Add(Message);
+            return Message;
         }
     }
 }

@@ -10,7 +10,10 @@ namespace ServerSide.Model
         public int Id { get; set; }
 
         [Required]
-        public uint PersonId { get; set; }
+        public int SenderPersonId { get; set; }
+
+        [Required]
+        public int RecipientPersonId { get; set; }
 
         [Required]
         public string MessageText { get; set; }

@@ -20,9 +20,9 @@ namespace H3GUI.Pages
             _logger = logger;
         }
 
-        public IActionResult OnGet()
-        {
-            var json = Newtonsoft.Json.JsonConvert.SerializeObject(Member);
-        }
+        //public IActionResult OnGet()
+        //{
+        //    var json = Newtonsoft.Json.JsonConvert.SerializeObject(Member);
+        //}
     }
 }

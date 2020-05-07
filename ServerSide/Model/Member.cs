@@ -18,6 +18,8 @@ namespace ServerSide.Model
         [Required]
         public string Password { get; set; }
 
+        public GpsLocation LastKnownLocation { get; set; }
+
         public Byte[] salt { get; set; }
     }
 }
