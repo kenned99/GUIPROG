@@ -5,21 +5,29 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using ServerSide;
+using ServerSide.Model;
 
 namespace H3GUI.Pages
 {
     public class IndexModel : PageModel
     {
-        private readonly ILogger<IndexModel> _logger;
+        private readonly IServerSideAccess serverSideAccess;
 
-        public IndexModel(ILogger<IndexModel> logger)
+        public IndexModel(IServerSideAccess serverSideAccess)
         {
-            _logger = logger;
+            this.serverSideAccess = serverSideAccess;
         }
+
+        [BindProperty(SupportsGet = true)]
+        public string filter { get; set; }
+
+        public IEnumerable<Member> Members => serverSideAccess.GetMembersByName(filter).OrderBy(x => x.Id);
 
         public void OnGet()
         {
-
+            //var json = Newtonsoft.Json.JsonConvert.SerializeObject(Member);
+            
         }
     }
 }
