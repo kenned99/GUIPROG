@@ -20,9 +20,9 @@ namespace H3GUI.Pages
         }
 
         [BindProperty(SupportsGet = true)]
-        public string filter { get; set; }
+        public string Filter { get; set; }
 
-        public IEnumerable<Member> Members => serverSideAccess.GetMembersByName(filter).OrderBy(x => x.Id);
+        public IEnumerable<Member> Members => serverSideAccess.GetMembersByName(Filter).OrderBy(x => x.Id);
 
         public void OnGet()
         {
