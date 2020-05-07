@@ -14,15 +14,17 @@ namespace H3GUI.Pages
 
 
         private readonly ILogger<PrivacyModel> _logger;
+        
 
         public PrivacyModel(ILogger<PrivacyModel> logger)
         {
             _logger = logger;
         }
 
-        //public IActionResult OnGet()
-        //{
-        //    var json = Newtonsoft.Json.JsonConvert.SerializeObject(Member);
-        //}
+        public IActionResult OnGet()
+        {
+            
+            return Page();
+        }
     }
 }
