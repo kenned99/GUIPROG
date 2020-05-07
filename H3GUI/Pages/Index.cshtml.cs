@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
@@ -20,14 +21,16 @@ namespace H3GUI.Pages
         }
 
         [BindProperty(SupportsGet = true)]
-        public string filter { get; set; }
+        public string Filter { get; set; }
 
-        public IEnumerable<Member> Members => serverSideAccess.GetMembersByName(filter).OrderBy(x => x.Id);
+        public IEnumerable<Member> Members => serverSideAccess.GetMembersByName(Filter).OrderBy(x => x.Id);
 
-        public void OnGet()
+        public IActionResult OnGet()
         {
-            //var json = Newtonsoft.Json.JsonConvert.SerializeObject(Member);
-            
+            if (HttpContext.Session.GetInt32("sessionUser") == null)
+                return RedirectToPage("/login");
+
+            return Page();
         }
     }
 }

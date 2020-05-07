@@ -13,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ServerSide;
 
+
 namespace H3GUI
 {   //Kenned
     public class Startup
@@ -27,19 +28,17 @@ namespace H3GUI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
-            services.AddSession();
-            services.AddMemoryCache();
-            services.AddMvc(option => option.EnableEndpointRouting = false);
-
-
             services.AddRazorPages();
             services.AddScoped<IServerSideAccess, ServerSideAccess>();
             services.AddDbContextPool<MembersDBContext>(builder => builder.UseSqlServer(Configuration.GetConnectionString("Yeet")));
 
-            // Session
-    
             services.AddDistributedMemoryCache();
+            services.AddSession(o =>{
+                o.IdleTimeout = TimeSpan.FromSeconds(1800);
+            });
+
+
+
 
         }
 
@@ -58,28 +57,21 @@ namespace H3GUI
             }
 
 
-            app.UseStaticFiles();
-            app.UseSession();
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller}/{action=Index}/{id?}");
-            });
-
-
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
 
             app.UseRouting();
-
+            
             app.UseAuthorization();
+
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
             });
+
         }
     }
 }

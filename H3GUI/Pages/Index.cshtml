@@ -1,7 +1,7 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "GPS Friends";
 }
 
 <style>
@@ -12,7 +12,7 @@
     }
 </style>
 
-<p>Here you are</p>
+<h1>Here you are</h1>
 <div id="map"></div>
 <script>
     // Note: This example requires that you consent to location sharing when
@@ -146,3 +146,39 @@
 <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC8ZjKyV_Q6cmshCmBMswH6JuQAkAzFdoo&callback=initMap">
 </script>
+
+
+<br>
+<br>
+<br>
+<h3>Search for users!</h3>
+<form class="form-inline float-left" method="get">
+    <input class="form-control mb-5" type="search" asp-for="Filter" />
+    <button class="btn btn-primary mb-5">Search</button>
+</form>
+
+
+<table class="table">
+    <tr>
+        <!--<div class="badge-info"> -->
+        <th>ID</th>
+        <th>Username</th>
+        <th>E-mail</th>
+        <th>Last known location</th>
+        <!--<th>Longtitude</th>
+        <th>Latitude</th> -->
+    </tr>
+    <!--TODO: Add logged in users information here-->
+
+    @foreach (var Mem in Model.Members)
+    {
+        <tr>
+            <td>@Mem.Id</td>
+            <td>@Mem.Username</td>
+            <td>@Mem.Email</td>
+            <td>@Mem.LastKnownLocation</td>
+            <!--<td>Mem.LastKnownLocation.Longtitude</td> <------ Add this when DB has been updated
+            <td>Mem.LastKnownLocation.Latitude</td>-->
+        </tr>
+    }
+</table>
