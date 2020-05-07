@@ -27,6 +27,12 @@ namespace H3GUI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            services.AddSession();
+            services.AddMemoryCache();
+            services.AddMvc(option => option.EnableEndpointRouting = false);
+
+
             services.AddRazorPages();
             services.AddScoped<IServerSideAccess, ServerSideAccess>();
             services.AddDbContextPool<MembersDBContext>(builder => builder.UseSqlServer(Configuration.GetConnectionString("Yeet")));
@@ -34,26 +40,6 @@ namespace H3GUI
             // Session
     
             services.AddDistributedMemoryCache();
-
-            services.AddSession(options => {
-                options.IdleTimeout = TimeSpan.FromHours(10);
-                options.Cookie.HttpOnly = true;
-                options.Cookie.IsEssential = true;
-            });
-            services.AddMvc();
-            services.Configure<CookiePolicyOptions>(options =>
-            {
-                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-                options.CheckConsentNeeded = context => true;
-                options.MinimumSameSitePolicy = SameSiteMode.None;
-            });
-
-            services.AddSession(options =>
-            {
-                options.Cookie.Name = ".AdventureWorks.Session";
-                options.IdleTimeout = TimeSpan.FromSeconds(10);
-                options.Cookie.IsEssential = true;
-            });
 
         }
 
@@ -71,13 +57,22 @@ namespace H3GUI
                 app.UseHsts();
             }
 
+
+            app.UseStaticFiles();
+            app.UseSession();
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller}/{action=Index}/{id?}");
+            });
+
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
 
             app.UseRouting();
-
-            app.UseSession();
 
             app.UseAuthorization();
 

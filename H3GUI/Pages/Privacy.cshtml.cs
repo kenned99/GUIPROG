@@ -14,6 +14,7 @@ namespace H3GUI.Pages
 
 
         private readonly ILogger<PrivacyModel> _logger;
+        
 
         public PrivacyModel(ILogger<PrivacyModel> logger)
         {
@@ -22,6 +23,7 @@ namespace H3GUI.Pages
 
         public IActionResult OnGet()
         {
+            
             return Page();
         }
     }
