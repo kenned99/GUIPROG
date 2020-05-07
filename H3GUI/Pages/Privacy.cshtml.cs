@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
+using ServerSide.Model;
 
 namespace H3GUI.Pages
 {
@@ -23,7 +25,9 @@ namespace H3GUI.Pages
 
         public IActionResult OnGet()
         {
-            
+            if (HttpContext.Session.GetInt32("sessionUser") == null)
+                return RedirectToPage("/login");
+
             return Page();
         }
     }
