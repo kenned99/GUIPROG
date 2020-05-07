@@ -14,12 +14,9 @@ namespace ServerSide.Model
         public decimal Longtitude { get; set; }
 
         [Required]
-        public decimal Latitude { get; set; }
+        public decimal Latitude { get; set; } 
 
-        [Required]
         public decimal Accuracy { get; set; }
-
-        public int Altitude { get; set; }
 
         public DateTime Time { get; set; } = DateTime.Now;
     }
