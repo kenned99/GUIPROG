@@ -76,7 +76,6 @@ namespace H3GUI.Pages
 
                 var json = Newtonsoft.Json.JsonConvert.SerializeObject(Member);
 
-
                 TempData.Add("LastAction", json);
 
                 return Page();
