@@ -22,6 +22,8 @@ namespace H3GUI.Pages
         [BindProperty]
         public Member Member { get; set; }
 
+
+
         public IEnumerable<Member> Members => serverSideAccess.GetMembersByName(Member.Username).OrderBy(x => x.Id);
 
         public LoginModel(IServerSideAccess serverSideAccess)
@@ -73,6 +75,7 @@ namespace H3GUI.Pages
             {
 
                 var json = Newtonsoft.Json.JsonConvert.SerializeObject(Member);
+
 
                 TempData.Add("LastAction", json);
 
