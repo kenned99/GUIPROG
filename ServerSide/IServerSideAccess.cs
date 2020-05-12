@@ -17,7 +17,6 @@ namespace ServerSide
         public int DeleteMember(int id);
         public int Commit();
         public Message SendMessage(int SenderID, int RecipientID, string MessageText);
-        public int UpdateLocation(GpsLocation GpsLocation, Member Member);
         public GpsLocation GetGpsLocations(int id);
     }
 }

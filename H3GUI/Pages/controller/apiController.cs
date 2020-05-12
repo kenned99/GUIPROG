@@ -108,5 +108,15 @@ namespace H3GUI.Pages.api
                 return View();
             }
         }
+
+        [HttpPost]
+        public ActionResult PostGpsLocation(string JsonString)
+        {
+            string test = JsonString;
+            //Member.LastKnownLocation = gps;
+            //serverSideAccess.UpdateMember(Member);
+            //serverSideAccess.Commit();
+            return View();
+        }
     }
 }

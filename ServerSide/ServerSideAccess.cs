@@ -66,14 +66,6 @@ namespace ServerSide
             return 0;
         }
 
-        //GPS stuff
-        public int UpdateLocation(GpsLocation GpsLocation, Member Member)
-        {
-            Member.LastKnownLocation = GpsLocation;
-            UpdateMember(Member);
-            return 1;
-        }
-
         //Message stuff
         public Message SendMessage(int SenderID, int RecipientID, string MessageText)
         {
