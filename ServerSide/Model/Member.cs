@@ -19,7 +19,7 @@ namespace ServerSide.Model
         public string Password { get; set; }
 
         public GpsLocation LastKnownLocation { get; set; }
-
+        public int? LastKnownLocationId { get; set; }
         public Byte[] salt { get; set; }
     }
 }

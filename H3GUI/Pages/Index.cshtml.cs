@@ -27,10 +27,10 @@ namespace H3GUI.Pages
 
         public IActionResult OnGet()
         {
-            if (HttpContext.Session.GetInt32("sessionUser") == null)
-                return RedirectToPage("/login");
+            //if (HttpContext.Session.GetInt32("sessionUser") == null)
+                //return RedirectToPage("/login");
 
-            return Page();
+           return Page();
         }
     }
 }
