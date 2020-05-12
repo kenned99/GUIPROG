@@ -26,9 +26,9 @@ namespace H3GUI.Pages
         public IEnumerable<Member> Members => serverSideAccess.GetMembersByName(Filter).OrderBy(x => x.Id);
 
         [BindProperty]
-        public decimal lat { get; set; }
+        public float lat { get; set; }
         [BindProperty]
-        public decimal lng { get; set; }
+        public float lng { get; set; }
 
 
 
