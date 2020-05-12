@@ -9,6 +9,7 @@ namespace ServerSide
     public interface IServerSideAccess
     {
         public Member GetMember(int id);
+        public GpsLocation GetGpsLocation(int Id);
         public IEnumerable<Member> GetMembersByName(string name = null);
         public Member GetMemberByName(string Username);
         public Member AddMember(Member Member);

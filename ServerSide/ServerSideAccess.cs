@@ -28,6 +28,10 @@ namespace ServerSide
             return db.Members.Find(Id);
         }
 
+        public GpsLocation GetGpsLocation(int Id)
+        {
+            return db.GpsLocation.Find(Id);
+        }
 
         public IEnumerable<Member> GetMembersByName(string name = null)
         {
