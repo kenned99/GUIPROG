@@ -5,7 +5,7 @@
 $(function () {
     var canvas = document.getElementById('canvas');
     var canvasContext = canvas.getContext('2d');
-    setInterval(drawcircel(), 500);
+    //setInterval(drawcircel(), 500);
 
     (function () {
     
@@ -27,14 +27,16 @@ $(function () {
             canvas.style.height = newHeight;
 
             console.log('canvas: ', canvas.style.width, canvas.height);
-            drawcircel()
+            drawPosData()
         }
 
         window.addEventListener('resize', resizeBoard, false);
     })();
  
 
-    function drawcircel() {
+    function drawPosData() {
+
+        getPosData();
         canvasContext.clearRect(0, 0, canvas.width, canvas.height);
 
         canvasContext.beginPath();
@@ -47,5 +49,24 @@ $(function () {
         canvasContext.stroke();
         console.log("redrew");
     }
-setInterval(drawcircel, 10000);
+
+    function getPosData() {
+        $.get("/controller/api", function (data, status) {
+            console.log(data);
+
+            $.each(data, function (index, value) {
+                if (value.lastKnownLocation != null) {
+                    console.log(value.lastKnownLocation.latitude)
+                    console.log(value.lastKnownLocation.longtitude)
+                    lat = Math.floor(value.lastKnownLocation.latitude);
+                    long = Math.floor(value.lastKnownLocation.longtitude);
+
+                    canvasContext.beginPath();
+                    canvasContext.arc(lat, long, 20, 0, 2 * Math.PI);
+                    canvasContext.stroke();
+                }
+            });
+        });
+    }
+    setInterval(drawPosData, 10000);
 })
