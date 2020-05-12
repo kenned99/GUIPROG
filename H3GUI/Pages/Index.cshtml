@@ -19,6 +19,7 @@
     // prompted by your browser. If you see the error "The Geolocation service
     // failed.", it means you probably did not give permission for the browser to
     // locate you.
+    //laver map element og giver det et latitude og longtitode
     var map, infoWindow;
 
     function initMap() {
@@ -132,7 +133,7 @@
             handleLocationError(false, infoWindow, map.getCenter());
         }
     }
-
+    //Hvis man ikke acceptere localition
     function handleLocationError(browserHasGeolocation, infoWindow, pos) {
         infoWindow.setPosition(pos);
         infoWindow.setContent(browserHasGeolocation ?
@@ -143,6 +144,7 @@
 
 </script>
 
+<!--Googles API-->
 <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC8ZjKyV_Q6cmshCmBMswH6JuQAkAzFdoo&callback=initMap">
 </script>
