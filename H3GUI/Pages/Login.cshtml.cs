@@ -1,23 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Dynamic;
 using System.Linq;
 using System.Security.Cryptography;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
-using System.Threading.Tasks;
-using System.Web.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using ServerSide;
 using ServerSide.Model;
+
+using Newtonsoft.Json;
 using Microsoft.AspNetCore.Http;
-using System.Text.Json.Serialization;
 
 namespace H3GUI.Pages
 {
     public class LoginModel : PageModel
     {
+
         private readonly IServerSideAccess serverSideAccess;
+
 
         [BindProperty]
         public Member Member { get; set; }
@@ -29,7 +29,9 @@ namespace H3GUI.Pages
         public LoginModel(IServerSideAccess serverSideAccess)
         {
             this.serverSideAccess = serverSideAccess;
+
         }
+
 
         private byte[] GetSalt()
         {
@@ -75,6 +77,7 @@ namespace H3GUI.Pages
             {
 
                 var json = Newtonsoft.Json.JsonConvert.SerializeObject(Member);
+                HttpContext.Session.SetInt32("sessionUser", Member.Id);
 
                 TempData.Add("LastAction", json);
 

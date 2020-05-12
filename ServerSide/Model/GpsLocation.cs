@@ -11,10 +11,10 @@ namespace ServerSide.Model
         public int Id { get; set; }
 
         [Required]
-        public decimal Longtitude { get; set; }
+        public float Longtitude { get; set; }
 
         [Required]
-        public decimal Latitude { get; set; } 
+        public float Latitude { get; set; } 
 
         public decimal Accuracy { get; set; }
 

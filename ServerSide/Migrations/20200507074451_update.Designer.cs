@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ServerSide;
 
 namespace ServerSide.Migrations
 {
     [DbContext(typeof(MembersDBContext))]
-    partial class MembersDBContextModelSnapshot : ModelSnapshot
+    [Migration("20200507074451_update")]
+    partial class update
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,18 +31,18 @@ namespace ServerSide.Migrations
                     b.Property<decimal>("Accuracy")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<float>("Latitude")
-                        .HasColumnType("real");
+                    b.Property<decimal>("Latitude")
+                        .HasColumnType("decimal(18,2)");
 
-                    b.Property<float>("Longtitude")
-                        .HasColumnType("real");
+                    b.Property<decimal>("Longtitude")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime>("Time")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.ToTable("GpsLocations");
+                    b.ToTable("GpsLocation");
                 });
 
             modelBuilder.Entity("ServerSide.Model.Member", b =>

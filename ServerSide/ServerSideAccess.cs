@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using ServerSide.Model;
 using System.Linq;
+using System.Data.Entity;
 
 namespace ServerSide
 {
@@ -27,14 +28,14 @@ namespace ServerSide
             return db.Members.Find(Id);
         }
 
+        public GpsLocation GetGpsLocation(int Id)
+        {
+            return db.GpsLocation.Find(Id);
+        }
 
         public IEnumerable<Member> GetMembersByName(string name = null)
         {
-            var query = from d in db.Members
-                        where d.Username.StartsWith(name) || string.IsNullOrEmpty(name)
-                        orderby d.Username
-                        select d;
-            return query;
+            return db.Members.Where(x => x.Username.StartsWith(name)|| name == null).Include(x => x.LastKnownLocation).ToList();
         }
 
         public Member GetMemberByName(string Username)
@@ -83,6 +84,13 @@ namespace ServerSide
 
             db.Add(Message);
             return Message;
+        }
+
+        public GpsLocation GetGpsLocation(int id)
+        {
+
+            return db.GpsLocations.FirstOrDefault(x => x.Id == id);
+
         }
     }
 }

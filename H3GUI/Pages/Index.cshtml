@@ -4,6 +4,8 @@
     ViewData["Title"] = "GPS Friends";
 }
 
+
+
 <style>
     /* Set the size of the div element that contains the map */
     #map {
@@ -23,6 +25,7 @@
     var map, infoWindow;
 
     function initMap() {
+
         map = new google.maps.Map(document.getElementById('map'), {
             center: { lat: -34.397, lng: 150.644 },
             zoom: 6,
@@ -123,7 +126,7 @@
                 infoWindow.setContent('You are here');
                 infoWindow.open(map);
                 map.setCenter(pos);
-
+                
 
             }, function () {
                 handleLocationError(true, infoWindow, map.getCenter());
@@ -147,7 +150,33 @@
 <!--Googles API-->
 <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC8ZjKyV_Q6cmshCmBMswH6JuQAkAzFdoo&callback=initMap">
+
+
+
 </script>
+
+
+
+<script>
+    //Cannot get lat or lng
+    function GetLocation() {
+        if (navigator.geolocation) {
+            console.log(position.coords.latitude);
+            console.log(position.coords.longitude);
+            @Model.lat = position.coords.latitude;
+            @Model.lng = position.coords.longitude;
+            
+        } else {
+            
+        }
+
+    }
+</script>
+
+<form method="post">
+    <button type="submit" onclick="GetLocation()" asp-page-handler="UpdateLocation" class="btn btn-primary">Save your location</button>
+</form>
+
 
 
 <br>
@@ -184,3 +213,12 @@
         </tr>
     }
 </table>
+
+<div style=" display: block; margin: 0 auto;">
+
+    <canvas id="canvas"
+            width="1000"
+            height="1000">
+    </canvas>
+
+</div>
