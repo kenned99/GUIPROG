@@ -48,16 +48,15 @@ namespace H3GUI.Pages
             return Page();
         }
 
-        //public void OnPostUpdateLocation()
-        //{
-        //    var member = serverSideAccess.GetMember(1);
-        //    var gps = serverSideAccess.GetGpsLocations(3);
-        //    gps.Latitude = lat;
-        //    gps.Longtitude = lng;
-        //    member.LastKnownLocation = gps;
-        //    serverSideAccess.UpdateMember(member);
-        //    serverSideAccess.Commit();
-        //}
+        public void OnPostUpdateLocation()
+        {
+            var member = serverSideAccess.GetMember(1);
+            var gps = serverSideAccess.GetGpsLocation(3);
+            gps.Latitude = lat;
+            gps.Longtitude = lng;
+            //serverSideAccess.UpdateLocations(gps, member);
+            //serverSideAccess.Commit();
+        }
 
     }
 }

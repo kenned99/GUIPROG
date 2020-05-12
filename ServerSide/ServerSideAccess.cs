@@ -4,6 +4,8 @@ using System.Text;
 using ServerSide.Model;
 using System.Linq;
 using System.Data.Entity;
+using ServerSide.DTOObject;
+using System.Linq.Expressions;
 
 namespace ServerSide
 {
@@ -54,6 +56,13 @@ namespace ServerSide
             db.Update(UpdatedPerson);
             return UpdatedPerson;
         }
+        public GpsLocation UpdateGpsLocation(GpsLocation NewGps)
+        {
+
+            var OldGps = GetGpsLocation(NewGps.Id);
+            db.Entry(OldGps).CurrentValues.SetValues(NewGps);
+            return OldGps;
+        }
 
         public int DeleteMember(int id)
         {
@@ -77,12 +86,44 @@ namespace ServerSide
             db.Add(Message);
             return Message;
         }
-
+        
         public GpsLocation GetGpsLocations(int id)
         {
 
             return db.GpsLocations.FirstOrDefault(x => x.Id == id);
 
         }
+
+        public DTOGps AddGpsLoc(DTOGps gps)
+        {
+
+            if ( gps.UserId != 0 && db.Members.FirstOrDefault(x => x.LastKnownLocationId == gps.UserId) == null )
+            {
+                GpsLocation dbgps = new GpsLocation();
+                dbgps.Latitude = gps.lat;
+                dbgps.Longtitude = gps.lng;
+
+                db.Add(dbgps);
+                Commit();
+
+                var person = db.Members.Find(gps.UserId);
+                 
+
+                person.LastKnownLocationId = dbgps.Id;
+                
+                UpdateMember(person);
+                Commit();
+                
+            }
+
+            
+                
+
+            return gps;
+        }
+
+
+
+
     }
 }
