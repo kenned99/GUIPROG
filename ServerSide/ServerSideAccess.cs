@@ -30,7 +30,7 @@ namespace ServerSide
 
         public GpsLocation GetGpsLocation(int Id)
         {
-            return db.GpsLocation.Find(Id);
+            return db.GpsLocations.Find(Id);
         }
 
         public IEnumerable<Member> GetMembersByName(string name = null)
@@ -66,14 +66,6 @@ namespace ServerSide
             return 0;
         }
 
-        //GPS stuff
-        public int UpdateLocation(GpsLocation GpsLocation, Member Member)
-        {
-            Member.LastKnownLocation = GpsLocation;
-            UpdateMember(Member);
-            return 1;
-        }
-
         //Message stuff
         public Message SendMessage(int SenderID, int RecipientID, string MessageText)
         {
@@ -86,7 +78,7 @@ namespace ServerSide
             return Message;
         }
 
-        public GpsLocation GetGpsLocation(int id)
+        public GpsLocation GetGpsLocations(int id)
         {
 
             return db.GpsLocations.FirstOrDefault(x => x.Id == id);
