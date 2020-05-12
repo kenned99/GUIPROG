@@ -97,26 +97,42 @@ namespace ServerSide
         public DTOGps AddGpsLoc(DTOGps gps)
         {
 
-            if ( gps.UserId != 0 && db.Members.FirstOrDefault(x => x.LastKnownLocationId == gps.UserId) == null )
+
+            if (gps.UserId != 0)
             {
-                GpsLocation dbgps = new GpsLocation();
-                dbgps.Latitude = gps.lat;
-                dbgps.Longtitude = gps.lng;
 
-                db.Add(dbgps);
-                Commit();
+                if ( db.Members.FirstOrDefault(x => x.Id == gps.UserId)?.LastKnownLocationId == null )
+                {
+                    GpsLocation dbgps = new GpsLocation();
+                    dbgps.Latitude = gps.lat;
+                    dbgps.Longtitude = gps.lng;
 
-                var person = db.Members.Find(gps.UserId);
+                    db.Add(dbgps);
+                    Commit();
+
+                    var person = db.Members.Find(gps.UserId);
                  
 
-                person.LastKnownLocationId = dbgps.Id;
+                    person.LastKnownLocationId = dbgps.Id;
                 
-                UpdateMember(person);
-                Commit();
+                    UpdateMember(person);
+                    Commit();
                 
-            }
+                }
+                else
+                {
+                    Member member = GetMember(gps.UserId);
+                    GpsLocation dbgps = new GpsLocation();
+                    dbgps.Id = (int)member.LastKnownLocationId;
 
+                    dbgps.Latitude = gps.lat;
+                    dbgps.Longtitude = gps.lng;
+
+                    UpdateGpsLocation(dbgps);
+                    Commit();
+                }
             
+            }
                 
 
             return gps;

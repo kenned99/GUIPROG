@@ -199,9 +199,8 @@
             <td>@Mem.Id</td>
             <td>@Mem.Username</td>
             <td>@Mem.Email</td>
-            <td>@Mem.LastKnownLocation</td>
-            <!--<td>Mem.LastKnownLocation.Longtitude</td> <------ Add this when DB has been updated
-            <td>Mem.LastKnownLocation.Latitude</td>-->
+            <td>@Mem.LastKnownLocation?.Longtitude</td> 
+            <td>@Mem.LastKnownLocation?.Latitude</td>
         </tr>
     }
 </table>
