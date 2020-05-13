@@ -22,9 +22,14 @@ namespace H3GUI.Pages
         [BindProperty]
         public Member Member { get; set; }
 
+        public string ConfirmPassword { get; set; }
+
 
 
         public IEnumerable<Member> Members => serverSideAccess.GetMembersByName(Member.Username).OrderBy(x => x.Id);
+
+        [BindProperty]
+        public int MemberId { get; set; } = 0;
 
         public LoginModel(IServerSideAccess serverSideAccess)
         {
@@ -32,6 +37,9 @@ namespace H3GUI.Pages
 
         }
 
+        public void OnGet()
+        {
+        }
 
         private byte[] GetSalt()
         {
@@ -58,14 +66,14 @@ namespace H3GUI.Pages
         public IActionResult OnPostRegister(Member Member)
         {
             Member.salt = GetSalt();
-            Member.Password = EncryptPassword(Member.Password, Member.salt);
+            string PlainPassword = Member.Password;
+            Member.Password = EncryptPassword(PlainPassword, Member.salt);
 
             if (ModelState.IsValid && Members.Count() == 0)
             {
                 serverSideAccess.AddMember(Member);
                 serverSideAccess.Commit();
-                OnPostLogin(Member.Username, Member.Password);
-                //return RedirectToPage("./Index");
+                OnPostLogin(Member.Username, PlainPassword);
             }
             return Page();
         }
@@ -80,6 +88,7 @@ namespace H3GUI.Pages
                 HttpContext.Session.SetInt32("sessionUser", Member.Id);
 
                 TempData.Add("LastAction", json);
+                MemberId = Member.Id;
 
                 return Page();
                 //TODO: Login functionality
