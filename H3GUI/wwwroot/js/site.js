@@ -69,28 +69,9 @@ $(function () {
         });
     }
     setInterval(drawPosData, 10000);
-    PostGpsLocation();
+    setInterval(getLocation(), 10000);
 })
 
-function GetGeoLocation() {
-
-    PostGpsLocation();
-}
-//Hvis man ikke acceptere localition
-//function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-//    infoWindow.setPosition(pos);
-//    infoWindow.setContent(browserHasGeolocation ?
-//        'Error: The Geolocation service failed.' :
-//        'Error: Your browser doesn\'t support geolocation.');
-//    infoWindow.open(map);
-//}
-
-function PostGpsLocation() {
-    getLocation()
-    var userId = $("#MemberIdInput").val();
-    console.log(userId);
-    
-}
 function getLocation() {
     if (navigator.geolocation) {
         navigator.geolocation.watchPosition(showPosition);
