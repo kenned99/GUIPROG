@@ -15,7 +15,7 @@ using ServerSide;
 
 
 namespace H3GUI
-{   //Kenned
+{   
     public class Startup
     {
         public Startup(IConfiguration configuration)
