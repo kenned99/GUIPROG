@@ -3,6 +3,7 @@ using ServerSide;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using ServerSide.DTOObject;
 
 namespace ServerSide
 {
@@ -18,5 +19,7 @@ namespace ServerSide
         public int Commit();
         public Message SendMessage(int SenderID, int RecipientID, string MessageText);
         public GpsLocation GetGpsLocations(int id);
+        public DTOGps AddGpsLoc(DTOGps gps);
+        public GpsLocation UpdateGpsLocation(GpsLocation gps);
     }
 }

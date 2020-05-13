@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ServerSide;
+using ServerSide.DTOObject;
 using ServerSide.Model;
 
 namespace H3GUI.Pages.api
@@ -110,13 +111,17 @@ namespace H3GUI.Pages.api
         }
 
         [HttpPost]
-        public ActionResult PostGpsLocation(string JsonString)
+        [Route("geoloc")]
+        public DTOGps PostGpsLocation([FromBody] DTOGps gps)
         {
-            string test = JsonString;
+            
+
+            return serverSideAccess.AddGpsLoc(gps);
+          
             //Member.LastKnownLocation = gps;
             //serverSideAccess.UpdateMember(Member);
             //serverSideAccess.Commit();
-            return View();
+           
         }
     }
 }

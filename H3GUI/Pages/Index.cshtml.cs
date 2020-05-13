@@ -23,7 +23,7 @@ namespace H3GUI.Pages
         [BindProperty(SupportsGet = true)]
         public string Filter { get; set; }
 
-        public IEnumerable<Member> Members => serverSideAccess.GetMembersByName(Filter).OrderBy(x => x.Id);
+        public IEnumerable<Member> Members { get; set; }
 
         [BindProperty]
         public float lat { get; set; }
@@ -42,22 +42,30 @@ namespace H3GUI.Pages
             {
                 MemberId = (int)sessionMemberId;
             }
-            //if (HttpContext.Session.GetInt32("sessionUser") == null)
-            //return RedirectToPage("/login");
+
+            if (HttpContext.Session.GetInt32("sessionUser") == null)
+            return RedirectToPage("/login");
+
+            Members = serverSideAccess.GetMembersByName();
+            foreach (var item in Members)
+                if (item.LastKnownLocationId.HasValue)
+                    item.LastKnownLocation = serverSideAccess.GetGpsLocation(item.LastKnownLocationId.Value);
+
+                
+            
 
             return Page();
         }
 
-        //public void OnPostUpdateLocation()
-        //{
-        //    var member = serverSideAccess.GetMember(1);
-        //    var gps = serverSideAccess.GetGpsLocations(3);
-        //    gps.Latitude = lat;
-        //    gps.Longtitude = lng;
-        //    member.LastKnownLocation = gps;
-        //    serverSideAccess.UpdateMember(member);
-        //    serverSideAccess.Commit();
-        //}
+        public void OnPostUpdateLocation()
+        {
+            var member = serverSideAccess.GetMember(1);
+            var gps = serverSideAccess.GetGpsLocation(3);
+            gps.Latitude = lat;
+            gps.Longtitude = lng;
+            //serverSideAccess.UpdateLocations(gps, member);
+            //serverSideAccess.Commit();
+        }
 
     }
 }

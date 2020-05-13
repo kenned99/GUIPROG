@@ -73,41 +73,46 @@ $(function () {
 })
 
 function GetGeoLocation() {
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function (position) {
 
-            var pos = {
-                lat: position.coords.latitude,
-                lng: position.coords.longitude
-            };
-
-            infoWindow.setPosition(pos);
-            infoWindow.setContent('You are here');
-            infoWindow.open(map);
-            map.setCenter(pos);
-
-
-        }, function () {
-            handleLocationError(true, infoWindow, map.getCenter());
-        });
-    } else {
-        // Browser doesn't support Geolocation
-        handleLocationError(false, infoWindow, map.getCenter());
-    }
-    PostGpsLocation(pos);
+    PostGpsLocation();
 }
 //Hvis man ikke acceptere localition
-function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-    infoWindow.setPosition(pos);
-    infoWindow.setContent(browserHasGeolocation ?
-        'Error: The Geolocation service failed.' :
-        'Error: Your browser doesn\'t support geolocation.');
-    infoWindow.open(map);
+//function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+//    infoWindow.setPosition(pos);
+//    infoWindow.setContent(browserHasGeolocation ?
+//        'Error: The Geolocation service failed.' :
+//        'Error: Your browser doesn\'t support geolocation.');
+//    infoWindow.open(map);
+//}
+
+function PostGpsLocation() {
+    getLocation()
+    var userId = $("#MemberIdInput").val();
+    console.log(userId);
+    
+}
+function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.watchPosition(showPosition);
+    } else {
+        x.innerHTML = "Geolocation is not supported by this browser.";
+    }
 }
 
-function PostGpsLocation(Pos) {
-    var userId = $("#MemberIdInput").val();
-
-    console.log(userId);
-    $.post("/controller/api", { userId: userId, longitude: Pos.long, latitude: Pos.lat });
+function showPosition(position) {
+    lat = position.coords.latitude;
+    lng = position.coords.longitude;
+    userId = parseInt($('#sessionUser').val());
+    json = JSON.stringify({ "userId": userId, "lat": lat, "lng": lng });
+    console.log(json);
+    $.ajax({
+        url: "/controller/api/geoloc",
+        type: "POST",
+        data: json,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function () {
+            console.log("hello");
+        }
+    })
 }
