@@ -43,8 +43,8 @@ namespace H3GUI.Pages
                 MemberId = (int)sessionMemberId;
             }
 
-            //if (HttpContext.Session.GetInt32("sessionUser") == null)
-            //return RedirectToPage("/login");
+            if (HttpContext.Session.GetInt32("sessionUser") == null)
+            return RedirectToPage("/login");
 
             Members = serverSideAccess.GetMembersByName();
             foreach (var item in Members)
