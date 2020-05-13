@@ -93,7 +93,7 @@ function showPosition(position) {
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function () {
-            console.log("hello");
+            console.log("upload data");
         }
     })
 }
