@@ -63,17 +63,17 @@ namespace H3GUI.Pages
             return hashed;
         }
 
-        public IActionResult OnPostRegister(Member Member, string ConfirmPassword)
+        public IActionResult OnPostRegister(Member Member)
         {
             Member.salt = GetSalt();
-            Member.Password = EncryptPassword(Member.Password, Member.salt);
+            string PlainPassword = Member.Password;
+            Member.Password = EncryptPassword(PlainPassword, Member.salt);
 
             if (ModelState.IsValid && Members.Count() == 0)
             {
                 serverSideAccess.AddMember(Member);
                 serverSideAccess.Commit();
-                OnPostLogin(Member.Username, Member.Password);
-                //return RedirectToPage("./Index");
+                OnPostLogin(Member.Username, PlainPassword);
             }
             return Page();
         }
