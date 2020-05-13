@@ -29,7 +29,7 @@ namespace H3GUI.Pages
         public IEnumerable<Member> Members => serverSideAccess.GetMembersByName(Member.Username).OrderBy(x => x.Id);
 
         [BindProperty]
-        public int MemberId { get; set; } = 0;
+        public int MemberId { get; set; }
 
         public LoginModel(IServerSideAccess serverSideAccess)
         {
@@ -86,11 +86,11 @@ namespace H3GUI.Pages
 
                 var json = Newtonsoft.Json.JsonConvert.SerializeObject(Member);
                 HttpContext.Session.SetInt32("sessionUser", Member.Id);
+                
 
-                TempData.Add("LastAction", json);
                 MemberId = Member.Id;
 
-                return Page();
+                return RedirectToPage("/privacy");
                 //TODO: Login functionality
             }
             TempData.Add("LastAction", "FAIL");
