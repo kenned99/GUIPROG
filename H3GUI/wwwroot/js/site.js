@@ -97,3 +97,10 @@ function showPosition(position) {
         }
     })
 }
+
+$(function () {
+    if ($(".loginInput").length)
+    {
+        getLocation();
+    }
+})
