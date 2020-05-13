@@ -3,7 +3,7 @@
 
 // Write your Javascript code.
 $(function () {
-    if (("canvas").length < 0) {
+    if (("canvas").length > 0) {
 
         var canvas = document.getElementById('canvas');
         var canvasContext = canvas.getContext('2d');
