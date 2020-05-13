@@ -110,44 +110,20 @@
                 }
             ]
         });
+
         infoWindow = new google.maps.InfoWindow;
-    }
 
-</script>
-
-<!--Googles API-->
-<script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC8ZjKyV_Q6cmshCmBMswH6JuQAkAzFdoo&callback=initMap">
-</script>
-
-
-
-<script>
-    //Cannot get lat or lng
-    function GetLocation() {
-        if (navigator.geolocation) {
-            console.log(position.coords.latitude);
-            console.log(position.coords.longitude);
-            //Model.lat = position.coords.latitude;
-            //Model.lng = position.coords.longitude;
-            
-        } else {
-            
-        }
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function (position) {
-
                 var pos = {
                     lat: position.coords.latitude,
                     lng: position.coords.longitude
                 };
 
                 infoWindow.setPosition(pos);
-                infoWindow.setContent('You are here');
+                infoWindow.setContent('Location found.');
                 infoWindow.open(map);
                 map.setCenter(pos);
-
-
             }, function () {
                 handleLocationError(true, infoWindow, map.getCenter());
             });
@@ -156,6 +132,20 @@
             handleLocationError(false, infoWindow, map.getCenter());
         }
     }
+
+    function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+        infoWindow.setPosition(pos);
+        infoWindow.setContent(browserHasGeolocation ?
+            'Error: The Geolocation service failed.' :
+            'Error: Your browser doesn\'t support geolocation.');
+        infoWindow.open(map);
+    }
+
+</script>
+
+<!--Googles API-->
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC8ZjKyV_Q6cmshCmBMswH6JuQAkAzFdoo&callback=initMap">
 </script>
 
 <br>
