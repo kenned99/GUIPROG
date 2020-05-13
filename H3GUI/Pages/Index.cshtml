@@ -134,8 +134,26 @@
         if (navigator.geolocation) {
             console.log(position.coords.latitude);
             console.log(position.coords.longitude);
-            //Model.lat = position.coords.latitude;
-            //Model.lng = position.coords.longitude;
+            @Model.lat = position.coords.latitude;
+            @Model.lng = position.coords.longitude;
+
+        } else {
+
+        }
+
+    }
+</script>
+
+<form method="post">
+    <input id="MemberIdInput" value="@Model.MemberId" hidden />
+    ////Cannot get lat or lng
+    //function GetLocation() {
+    //    if (navigator.geolocation) {
+    //        console.log(position.coords.latitude);
+    //        console.log(position.coords.longitude);
+    //        //Model.lat = position.coords.latitude;
+    //        //Model.lng = position.coords.longitude;
+
             
         } else {
             
@@ -205,7 +223,11 @@
     }
 </table>
 
+<br>
+<br>
+<br>
 <h3>MAP</h3>
+
 
 <div style=" display: block; margin: 0 auto;">
 
