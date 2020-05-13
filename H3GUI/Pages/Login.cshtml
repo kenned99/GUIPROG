@@ -103,6 +103,14 @@
     </div>
 </body>
 
+@if (Model.MemberId != 0)
+{
+    <input class="loginInput" id="sessionUser" value="@Model.MemberId" hidden/>
+    <script>
+        window.location.href = "./Index";
+    </script>
+}
+
 <!--CSS-->
 <style>
     body {
