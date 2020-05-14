@@ -57,7 +57,9 @@ $(function () {
                 $(".table tr").remove(); 
                 $(".table").append("<tr><th>ID</th><th>Username</th><th>E-mail</th><th>Latitude</th><th>Longitude</th</tr>");
                 $.each(data, function (index, value) {
-                    $(".table").append("<tr><td> " + value.id + "</td > <td>" + value.username + "</td><td>" + value.email + "</td><td>" + value.lastKnownLocation.latitude + "</td><td>" + value.lastKnownLocation.longtitude + "</td></tr > ")
+                    locationValue = value.lastKnownLocation
+
+                    $(".table").append("<tr><td> " + value.id + "</td > <td>" + value.username + "</td><td>" + value.email + "</td><td>" + (locationValue ? locationValue.latitude : "") + "</td><td>" + (locationValue ? locationValue.longtitude : "") + "</td></tr > ")
                     if (value.lastKnownLocation != null) {
                         
                         

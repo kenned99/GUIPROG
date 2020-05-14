@@ -171,14 +171,14 @@
 
     @foreach (var Mem in Model.Members)
     {
-<tr>
-    <td>@Mem.Id</td>
-    <td>@Mem.Username</td>
-    <td>@Mem.Email</td>
-    <td>@Mem.LastKnownLocation?.Latitude</td>
-    <td>@Mem.LastKnownLocation?.Longtitude</td>
-</tr>
-    }
+        <tr>
+            <td>@Mem.Id</td>
+            <td>@Mem.Username</td>
+            <td>@Mem.Email</td>
+            <td>@Mem.LastKnownLocation?.Latitude</td>
+            <td>@Mem.LastKnownLocation?.Longtitude</td>
+        </tr>
+    }   
 </table>
 
 <h3>MAP</h3>
