@@ -76,12 +76,12 @@ namespace ServerSide
         }
 
         //Message stuff
-        public Message SendMessage(int SenderID, int RecipientID, string MessageText)
+        public Message SendMessage(SendMessageInfo DTO)
         {
             Message Message = new Message();
-            Message.SenderPersonId = SenderID;
-            Message.RecipientPersonId = RecipientID;
-            Message.MessageText = MessageText;
+            Message.SenderPersonId = DTO.SenderID;
+            Message.RecipientPersonId = DTO.RecipientID;
+            Message.MessageText = DTO.MessageText;
 
             db.Add(Message);
             return Message;

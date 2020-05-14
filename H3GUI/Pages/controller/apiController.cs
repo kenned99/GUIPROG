@@ -131,5 +131,13 @@ namespace H3GUI.Pages.api
         {
             return serverSideAccess.RecieveMessage(DTO).OrderBy(x => x.TimeSent);
         }
+
+        [HttpPost]
+        [Route("SendMessage")]
+        public int SendMessage(SendMessageInfo DTO)
+        {
+            serverSideAccess.SendMessage(DTO);
+            return serverSideAccess.Commit();
+        }
     }
 }
