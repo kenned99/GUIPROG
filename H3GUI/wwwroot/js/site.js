@@ -55,11 +55,11 @@ $(function () {
                 var ctx = c.getContext("2d");
 
                 $(".table tr").remove(); 
-                $(".table").append("<tr><th>ID</th><th>Username</th><th>E-mail</th><th>Latitude</th><th>Longitude</th</tr>");
+                $(".table").append("<tr><th>ID</th><th>Username</th><th>E-mail</th><th>Latitude</th><th>Longitude</th><th>Chat<th/></tr>");
                 $.each(data, function (index, value) {
                     locationValue = value.lastKnownLocation
 
-                    $(".table").append("<tr><td> " + value.id + "</td > <td>" + value.username + "</td><td>" + value.email + "</td><td>" + (locationValue ? locationValue.latitude : "") + "</td><td>" + (locationValue ? locationValue.longtitude : "") + "</td></tr > ")
+                    $(".table").append("<tr><td> " + value.id + "</td > <td>" + value.username + "</td><td>" + value.email + "</td><td>" + (locationValue ? locationValue.latitude : "") + "</td><td>" + (locationValue ? locationValue.longtitude : "") + "</td><td><button onClick='showModal(value.Id)' class='btn btn-primary' id='" + value.id+"'>Chat</button><td/></tr > ")
                     if (value.lastKnownLocation != null) {
                         
                         
@@ -116,4 +116,8 @@ function showPosition(position) {
     })
 }
 
-
+//åbner modal
+    function showModal() {
+        $('.modal').modal('show')
+        
+    }
