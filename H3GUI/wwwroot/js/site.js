@@ -120,15 +120,19 @@ function showPosition(position) {
 function showModal(recipientId) {
     $('.modal').modal('show')
     $('.recipientId').val(recipientId)
-    createMessageBox()
+    GetMessages()
 }  
 
-function createMessageBox() {
+function createMessageBox(messages) {
    // console.log($('.messageBox'))
-    $('.messageBox').append('<div class>messages</div>')
-    var messages = [{ "id": 2, "senderPersonId": 18, "recipientPersonId": 17, "messageText": "asd", "timeSent": "2020-05-14T12:08:30" }, { "id": 1, "senderPersonId": 17, "recipientPersonId": 18, "messageText": "sut mig", "timeSent": "2020-05-14T13:08:30" }, { "id": 3, "senderPersonId": 17, "recipientPersonId": 18, "messageText": "sdf", "timeSent": "2020-05-14T15:08:30" }]
+   // var messages = [{ "id": 2, "senderPersonId": 18, "recipientPersonId": 17, "messageText": "asd", "timeSent": "2020-05-14T12:08:30" }, { "id": 1, "senderPersonId": 17, "recipientPersonId": 18, "messageText": "sut mig", "timeSent": "2020-05-14T13:08:30" }, { "id": 3, "senderPersonId": 17, "recipientPersonId": 18, "messageText": "sdf", "timeSent": "2020-05-14T15:08:30" }]
     console.log(messages)
-    GetMessages();
+    $('.messageDiv').remove();
+    $.each(messages, function (index, value) {
+        $('.messageBox').append('<div class="messageDiv">' + value.senderPersonId + ': ' + value.messageText + '</div>')
+
+    })
+   $('.messages').append()
 }
 
 function GetMessages() {
@@ -144,7 +148,8 @@ function GetMessages() {
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (data) {
-            console.log(data);
+//            console.log(data);
+            createMessageBox(data)
         }
     })
 }
