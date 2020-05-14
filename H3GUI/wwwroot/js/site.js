@@ -58,6 +58,10 @@ $(function () {
 
                 $.each(data, function (index, value) {
                     if (value.lastKnownLocation != null) {
+
+                        $(".table tr").remove(); 
+
+
                         console.log(value.lastKnownLocation.latitude)
                         console.log(value.lastKnownLocation.longtitude)
                         lat = Math.floor(value.lastKnownLocation.latitude);
