@@ -73,7 +73,7 @@ namespace H3GUI.Pages
             {
                 serverSideAccess.AddMember(Member);
                 serverSideAccess.Commit();
-                OnPostLogin(Member.Username, PlainPassword);
+                return OnPostLogin(Member.Username, PlainPassword);
             }
             return Page();
         }
@@ -90,7 +90,7 @@ namespace H3GUI.Pages
 
                 MemberId = Member.Id;
 
-                return RedirectToPage("/index");
+                return RedirectToPage("/Index");
                 //TODO: Login functionality
             }
             TempData.Add("LastAction", "FAIL");
