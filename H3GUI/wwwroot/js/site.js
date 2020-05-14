@@ -120,11 +120,12 @@ function showPosition(position) {
 function showModal(recipientId) {
     $('.modal').modal('show')
     $('.recipientId').val(recipientId)
-}
+    createMessageBox()
+}  
 
 function createMessageBox() {
-    console.log($('.messageBox'))
-    $('.messageBox').append('<div>hello</div>')
-    var messages = [ {  "id": 2, "senderPersonId": 18, "recipientPersonId": 17, "messageText": "asd", "timeSent": "2020-05-14T12:08:30"}, {"id": 1, "senderPersonId": 17, "recipientPersonId": 18, "messageText": "sut mig", "timeSent": "2020-05-14T13:08:30" }, {"id": 3, "senderPersonId": 17, "recipientPersonId": 18, "messageText": "sdf", "timeSent": "2020-05-14T15:08:30"}]
-
+   // console.log($('.messageBox'))
+    $('.messageBox').append('<div class>messages</div>')
+    var messages = [{ "id": 2, "senderPersonId": 18, "recipientPersonId": 17, "messageText": "asd", "timeSent": "2020-05-14T12:08:30" }, { "id": 1, "senderPersonId": 17, "recipientPersonId": 18, "messageText": "sut mig", "timeSent": "2020-05-14T13:08:30" }, { "id": 3, "senderPersonId": 17, "recipientPersonId": 18, "messageText": "sdf", "timeSent": "2020-05-14T15:08:30" }]
+    console.log(messages)
 }
