@@ -16,5 +16,6 @@ namespace ServerSide
         
         public DbSet<Member> Members { get; set; }
         public DbSet<GpsLocation> GpsLocations  { get; set; }
+        public DbSet<Message> Messages { get; set; }
     }
 }

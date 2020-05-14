@@ -86,6 +86,16 @@ namespace ServerSide
             db.Add(Message);
             return Message;
         }
+
+        public string RecieveMessage(int SenderId, int RecipientId)
+        {
+
+            var output = Newtonsoft.Json.JsonConvert.SerializeObject(db.Messages.Where(x => x.SenderPersonId == SenderId));
+            output += Newtonsoft.Json.JsonConvert.SerializeObject(db.Messages.Where(x => x.RecipientPersonId == RecipientId));
+
+
+            return output;
+        }
         
         public GpsLocation GetGpsLocations(int id)
         {
