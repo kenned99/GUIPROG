@@ -17,8 +17,7 @@ namespace H3GUI.Pages
 
         private readonly ILogger<PrivacyModel> _logger;
 
-        [BindProperty]
-        public int MemberId { get; set; }
+
 
         public PrivacyModel(ILogger<PrivacyModel> logger)
         {
@@ -27,7 +26,6 @@ namespace H3GUI.Pages
 
         public IActionResult OnGet()
         {
-            MemberId = (int)HttpContext.Session.GetInt32("sessionUser");
 
             if (HttpContext.Session.GetInt32("sessionUser") == null)
                 return RedirectToPage("/login");

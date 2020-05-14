@@ -54,11 +54,13 @@ $(function () {
                 var c = document.getElementById("canvas");
                 var ctx = c.getContext("2d");
 
+                $(".table tr").remove(); 
+                $(".table").append("<tr><th>ID</th><th>Username</th><th>E-mail</th><th>Latitude</th><th>Longitude</th</tr>");
                 $.each(data, function (index, value) {
+                    $(".table").append("<tr><td> " + value.id + "</td > <td>" + value.username + "</td><td>" + value.email + "</td><td>" + value.lastKnownLocation.latitude + "</td><td>" + value.lastKnownLocation.longtitude + "</td></tr > ")
                     if (value.lastKnownLocation != null) {
-
-                        $(".table tr").remove(); 
-
+                        
+                        
 
                         console.log(value.lastKnownLocation.latitude)
                         console.log(value.lastKnownLocation.longtitude)
@@ -112,11 +114,4 @@ function showPosition(position) {
     })
 }
 
-//Kalder hvis jeg logger ind sucssesfully
-$(function () {
-    if ($(".loginInput").length)
-    {
-        console.log("hello");
-        getLocation();
-    }
-})
+

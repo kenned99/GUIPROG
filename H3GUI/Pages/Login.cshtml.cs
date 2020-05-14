@@ -90,7 +90,7 @@ namespace H3GUI.Pages
 
                 MemberId = Member.Id;
 
-                return RedirectToPage("/privacy");
+                return RedirectToPage("/index");
                 //TODO: Login functionality
             }
             TempData.Add("LastAction", "FAIL");
