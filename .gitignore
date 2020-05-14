@@ -74,3 +74,4 @@ _[Ss]cripts
 *.ncrunchsolution
 *.dot[Cc]over
 applicationhost.config
+.vs/H3GUI/DesignTimeBuild/.dtbcache.v2
