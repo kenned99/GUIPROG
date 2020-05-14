@@ -76,12 +76,12 @@ namespace ServerSide
         }
 
         //Message stuff
-        public Message SendMessage(int SenderID, int RecipientID, string MessageText)
+        public Message SendMessage(SendMessageInfo DTO)
         {
             Message Message = new Message();
-            Message.SenderPersonId = SenderID;
-            Message.RecipientPersonId = RecipientID;
-            Message.MessageText = MessageText;
+            Message.SenderPersonId = DTO.SenderID;
+            Message.RecipientPersonId = DTO.RecipientID;
+            Message.MessageText = DTO.MessageText;
 
             db.Add(Message);
             return Message;
@@ -90,7 +90,8 @@ namespace ServerSide
         public IEnumerable<Message> RecieveMessage(RecieveMessageInfo GTO)
         {
 
-             return db.Messages.Where(x => ((x.SenderPersonId == GTO.SenderId) && (x.RecipientPersonId == GTO.RecipientId) || (x.RecipientPersonId == GTO.SenderId) && (x.SenderPersonId == GTO.RecipientId))).ToList();
+            var output = db.Messages.Where(x => ((x.SenderPersonId == GTO.SenderId) && (x.RecipientPersonId == GTO.RecipientId) || (x.RecipientPersonId == GTO.SenderId) && (x.SenderPersonId == GTO.RecipientId))).ToList();
+            return output;
         }
         
         public GpsLocation GetGpsLocations(int id)

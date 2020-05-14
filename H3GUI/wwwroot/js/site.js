@@ -38,13 +38,13 @@ $(function () {
 
         function drawPosData() {
 
-            
+
             getPosData();
             canvasContext.clearRect(0, 0, canvas.width, canvas.height);
 
             var radius = Math.floor($(".container").width() / 20);
             console.log(radius)
-            
+
             console.log("redrew");
         }
 
@@ -54,15 +54,15 @@ $(function () {
                 var c = document.getElementById("canvas");
                 var ctx = c.getContext("2d");
 
-                $(".table tr").remove(); 
+                $(".table tr").remove();
                 $(".table").append("<tr><th>ID</th><th>Username</th><th>E-mail</th><th>Latitude</th><th>Longitude</th><th>Chat<th/></tr>");
                 $.each(data, function (index, value) {
                     locationValue = value.lastKnownLocation
 
-                    $(".table").append("<tr><td> " + value.id + "</td > <td>" + value.username + "</td><td>" + value.email + "</td><td>" + (locationValue ? locationValue.latitude : "") + "</td><td>" + (locationValue ? locationValue.longtitude : "") + "</td><td><button onClick='showModal("+ value.id + ")' class='btn btn-primary' id='" + value.id + "'>Chat</button><td/></tr > ")
+                    $(".table").append("<tr><td> " + value.id + "</td > <td>" + value.username + "</td><td>" + value.email + "</td><td>" + (locationValue ? locationValue.latitude : "") + "</td><td>" + (locationValue ? locationValue.longtitude : "") + "</td><td><button onClick='showModal(" + value.id + ")' class='btn btn-primary' id='" + value.id + "'>Chat</button><td/></tr > ")
                     if (value.lastKnownLocation != null) {
-                        
-                        
+
+
 
                         console.log(value.lastKnownLocation.latitude)
                         console.log(value.lastKnownLocation.longtitude)
@@ -128,4 +128,49 @@ function createMessageBox() {
     $('.messageBox').append('<div class>messages</div>')
     var messages = [{ "id": 2, "senderPersonId": 18, "recipientPersonId": 17, "messageText": "asd", "timeSent": "2020-05-14T12:08:30" }, { "id": 1, "senderPersonId": 17, "recipientPersonId": 18, "messageText": "sut mig", "timeSent": "2020-05-14T13:08:30" }, { "id": 3, "senderPersonId": 17, "recipientPersonId": 18, "messageText": "sdf", "timeSent": "2020-05-14T15:08:30" }]
     console.log(messages)
+    GetMessages();
 }
+
+function GetMessages() {
+    var SessionId = parseInt($("#sessionUser").val());
+    var RecipientId = parseInt($(".recipientId").val());
+
+    json = ({"SenderId": SessionId, "RecipientId": RecipientId }); //konventere om til JSON
+    console.log(json);
+    $.ajax({
+        url: "/controller/api/Message", //sender det over til api
+        type: "GET",
+        data: json,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (data) {
+            console.log(data);
+        }
+    })
+}
+
+function SendMessage(MessageText) {
+    var SessionId = parseInt($("#sessionUser").val());
+    var RecipientId = parseInt($(".recipientId").val());
+    //var MessageText = "insert text here"
+
+    json = JSON.stringify({ "SenderId": SessionId, "RecipientId": RecipientId, "MessageText": MessageText }); //konventere om til JSON
+    console.log(json);
+    $.ajax({
+        url: "/controller/api/SendMessage", //sender det over til api
+        type: "POST",
+        data: json,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (data) {
+            console.log(data);
+        }
+    })
+}
+
+$(function () {
+    $(".SendButton").click(function () {
+        var MessageText = $(".inputTextArea").val();
+        SendMessage(MessageText);
+    })
+})

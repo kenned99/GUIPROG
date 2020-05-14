@@ -17,10 +17,10 @@ namespace ServerSide
         public Member UpdateMember(Member UpdatedMember);
         public int DeleteMember(int id);
         public int Commit();
-        public Message SendMessage(int SenderID, int RecipientID, string MessageText);
         public GpsLocation GetGpsLocations(int id);
         public DTOGps AddGpsLoc(DTOGps gps);
         public GpsLocation UpdateGpsLocation(GpsLocation gps);
+        public Message SendMessage(SendMessageInfo DTO);
         public IEnumerable<Message> RecieveMessage(RecieveMessageInfo GTO);
     }
 }
