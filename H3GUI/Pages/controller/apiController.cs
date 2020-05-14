@@ -110,6 +110,7 @@ namespace H3GUI.Pages.api
             }
         }
 
+        //Poster GPS lokalition på siden
         [HttpPost]
         [Route("geoloc")]
         public DTOGps PostGpsLocation([FromBody] DTOGps gps)
