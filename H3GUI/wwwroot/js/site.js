@@ -80,6 +80,7 @@ $(function () {
     }
 })
 
+//bliver kørt når åbner index eller login
 function getLocation() {
     if (navigator.geolocation) {
         navigator.geolocation.watchPosition(showPosition);
@@ -88,14 +89,15 @@ function getLocation() {
     }
 }
 
+//Finder localition
 function showPosition(position) {
     lat = position.coords.latitude;
     lng = position.coords.longitude;
     userId = parseInt($('#sessionUser').val());
-    json = JSON.stringify({ "userId": userId, "lat": lat, "lng": lng });
+    json = JSON.stringify({ "userId": userId, "lat": lat, "lng": lng }); //konventere om til JSON
     console.log(json);
     $.ajax({
-        url: "/controller/api/geoloc",
+        url: "/controller/api/geoloc", //sender det over til api
         type: "POST",
         data: json,
         contentType: "application/json; charset=utf-8",
@@ -106,6 +108,7 @@ function showPosition(position) {
     })
 }
 
+//Kalder hvis jeg logger ind sucssesfully
 $(function () {
     if ($(".loginInput").length)
     {
