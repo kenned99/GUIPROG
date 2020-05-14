@@ -127,9 +127,9 @@ namespace H3GUI.Pages.api
 
         [HttpGet]
         [Route("Message")]
-        public string RecieveMessage(int SenderId, int RecipientId)
+        public IEnumerable<Message> RecieveMessage(RecieveMessageInfo DTO)
         {
-            return serverSideAccess.RecieveMessage(SenderId, RecipientId);
+            return serverSideAccess.RecieveMessage(DTO).OrderBy(x => x.TimeSent);
         }
     }
 }

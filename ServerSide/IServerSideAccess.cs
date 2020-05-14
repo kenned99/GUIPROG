@@ -21,6 +21,6 @@ namespace ServerSide
         public GpsLocation GetGpsLocations(int id);
         public DTOGps AddGpsLoc(DTOGps gps);
         public GpsLocation UpdateGpsLocation(GpsLocation gps);
-        public string RecieveMessage(int SenderId, int RecipientId);
+        public IEnumerable<Message> RecieveMessage(RecieveMessageInfo GTO);
     }
 }
