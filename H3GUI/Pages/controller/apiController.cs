@@ -124,5 +124,12 @@ namespace H3GUI.Pages.api
             //serverSideAccess.Commit();
            
         }
+
+        [HttpGet]
+        [Route("Message")]
+        public string RecieveMessage(int SenderId, int RecipientId)
+        {
+            return serverSideAccess.RecieveMessage(SenderId, RecipientId);
+        }
     }
 }

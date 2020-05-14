@@ -49,10 +49,6 @@ namespace H3GUI.Pages
             foreach (var item in Members)
                 if (item.LastKnownLocationId.HasValue)
                     item.LastKnownLocation = serverSideAccess.GetGpsLocation(item.LastKnownLocationId.Value);
-
-                
-            
-
             return Page();
         }
 
