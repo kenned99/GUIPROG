@@ -38,33 +38,38 @@ $(function () {
 
         function drawPosData() {
 
+            
             getPosData();
             canvasContext.clearRect(0, 0, canvas.width, canvas.height);
 
-            canvasContext.beginPath();
             var radius = Math.floor($(".container").width() / 20);
             console.log(radius)
-            canvasContext.arc(100, 75, radius, 0, 2 * Math.PI);
-            canvasContext.stroke();
-            canvasContext.beginPath();
-            canvasContext.arc(200, 75, 50, 0, 2 * Math.PI);
-            canvasContext.stroke();
+            
             console.log("redrew");
         }
 
         function getPosData() {
             $.get("/controller/api", function (data, status) {
                 console.log(data);
+                var c = document.getElementById("canvas");
+                var ctx = c.getContext("2d");
 
                 $.each(data, function (index, value) {
                     if (value.lastKnownLocation != null) {
                         console.log(value.lastKnownLocation.latitude)
                         console.log(value.lastKnownLocation.longtitude)
+                        console.log(value.username);
                         lat = Math.floor(value.lastKnownLocation.latitude);
                         long = Math.floor(value.lastKnownLocation.longtitude);
 
+                        ctx.font = "15px Arial";
+                        //lat er vandret og long parametren er lodret
+                        ctx.fillText(value.username, (lat - 12), (long + 20));
                         canvasContext.beginPath();
-                        canvasContext.arc(lat, long, 20, 0, 2 * Math.PI);
+                        canvasContext.arc(lat, long, 5, 0, 2 * Math.PI);
+                        canvasContext.fillStyle = 'green';
+                        canvasContext.fill();
+                        canvasContext.lineWidth = 5;
                         canvasContext.stroke();
                     }
                 });
