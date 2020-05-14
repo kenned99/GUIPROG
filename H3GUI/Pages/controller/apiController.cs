@@ -124,5 +124,20 @@ namespace H3GUI.Pages.api
             //serverSideAccess.Commit();
            
         }
+
+        [HttpGet]
+        [Route("Message")]
+        public IEnumerable<Message> RecieveMessage([FromQuery]RecieveMessageInfo DTO)
+        {
+            return serverSideAccess.RecieveMessage(DTO).OrderBy(x => x.TimeSent);
+        }
+
+        [HttpPost]
+        [Route("SendMessage")]
+        public int SendMessage([FromBody]SendMessageInfo DTO)
+        {
+            serverSideAccess.SendMessage(DTO);
+            return serverSideAccess.Commit();
+        }
     }
 }

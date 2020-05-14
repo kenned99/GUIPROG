@@ -23,7 +23,7 @@ namespace H3GUI.Pages
         [BindProperty(SupportsGet = true)]
         public string Filter { get; set; }
 
-        public IEnumerable<Member> Members { get; set; }
+        public IEnumerable<Member> Members => serverSideAccess.GetMembersByName(Filter).OrderBy(x => x.Id);
 
         [BindProperty]
         public float lat { get; set; }
@@ -46,14 +46,9 @@ namespace H3GUI.Pages
             if (HttpContext.Session.GetInt32("sessionUser") == null)
             return RedirectToPage("/login");
 
-            Members = serverSideAccess.GetMembersByName();
             foreach (var item in Members)
                 if (item.LastKnownLocationId.HasValue)
                     item.LastKnownLocation = serverSideAccess.GetGpsLocation(item.LastKnownLocationId.Value);
-
-                
-            
-
             return Page();
         }
 
@@ -63,8 +58,6 @@ namespace H3GUI.Pages
             var gps = serverSideAccess.GetGpsLocation(3);
             gps.Latitude = lat;
             gps.Longtitude = lng;
-            //serverSideAccess.UpdateLocations(gps, member);
-            //serverSideAccess.Commit();
         }
 
     }
