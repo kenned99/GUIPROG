@@ -14,7 +14,7 @@
     }
 </style>
 
-<h1>Here you are</h1>
+<h1>Google maps</h1>
 <div id="map"></div>
 <script>
     // Note: This example requires that you consent to location sharing when
@@ -166,6 +166,7 @@
         <th>E-mail</th>
         <th>Latitude</th>
         <th>Longitude</th>
+        <th>Chat</th>
     </tr>
     <!--TODO: Add logged in users information here-->
 
@@ -177,11 +178,13 @@
     <td>@Mem.Email</td>
     <td>@Mem.LastKnownLocation?.Latitude</td>
     <td>@Mem.LastKnownLocation?.Longtitude</td>
+    <td><button class="btn btn-primary">Chat</button></td>
 </tr>
     }
+
 </table>
 
-<h3>MAP</h3>
+<h3>Canvas</h3>
 <input type="hidden" value="@Model.MemberId" id="sessionUser" />
 <div style=" display: block; margin: 0 auto;">
 
