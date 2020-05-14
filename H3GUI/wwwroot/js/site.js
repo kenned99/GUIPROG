@@ -59,7 +59,7 @@ $(function () {
                 $.each(data, function (index, value) {
                     locationValue = value.lastKnownLocation
 
-                    $(".table").append("<tr><td> " + value.id + "</td > <td>" + value.username + "</td><td>" + value.email + "</td><td>" + (locationValue ? locationValue.latitude : "") + "</td><td>" + (locationValue ? locationValue.longtitude : "") + "</td><td><button onClick='showModal(value.Id)' class='btn btn-primary' id='" + value.id+"'>Chat</button><td/></tr > ")
+                    $(".table").append("<tr><td> " + value.id + "</td > <td>" + value.username + "</td><td>" + value.email + "</td><td>" + (locationValue ? locationValue.latitude : "") + "</td><td>" + (locationValue ? locationValue.longtitude : "") + "</td><td><button onClick='showModal("+ value.id + ")' class='btn btn-primary' id='" + value.id + "'>Chat</button><td/></tr > ")
                     if (value.lastKnownLocation != null) {
                         
                         
@@ -116,8 +116,15 @@ function showPosition(position) {
     })
 }
 
-//åbner modal
-    function showModal() {
-        $('.modal').modal('show')
-        
-    }
+//åbner modal og hiver fat i recipient Id
+function showModal(recipientId) {
+    $('.modal').modal('show')
+    $('.recipientId').val(recipientId)
+}
+
+function createMessageBox() {
+    console.log($('.messageBox'))
+    $('.messageBox').append('<div>hello</div>')
+    var messages = [ {  "id": 2, "senderPersonId": 18, "recipientPersonId": 17, "messageText": "asd", "timeSent": "2020-05-14T12:08:30"}, {"id": 1, "senderPersonId": 17, "recipientPersonId": 18, "messageText": "sut mig", "timeSent": "2020-05-14T13:08:30" }, {"id": 3, "senderPersonId": 17, "recipientPersonId": 18, "messageText": "sdf", "timeSent": "2020-05-14T15:08:30"}]
+
+}
