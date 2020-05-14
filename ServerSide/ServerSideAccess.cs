@@ -87,14 +87,10 @@ namespace ServerSide
             return Message;
         }
 
-        public string RecieveMessage(int SenderId, int RecipientId)
+        public IEnumerable<Message> RecieveMessage(RecieveMessageInfo GTO)
         {
 
-            var output = Newtonsoft.Json.JsonConvert.SerializeObject(db.Messages.Where(x => x.SenderPersonId == SenderId));
-            output += Newtonsoft.Json.JsonConvert.SerializeObject(db.Messages.Where(x => x.RecipientPersonId == RecipientId));
-
-
-            return output;
+             return db.Messages.Where(x => ((x.SenderPersonId == GTO.SenderId) && (x.RecipientPersonId == GTO.RecipientId) || (x.RecipientPersonId == GTO.SenderId) && (x.SenderPersonId == GTO.RecipientId))).ToList();
         }
         
         public GpsLocation GetGpsLocations(int id)
