@@ -89,8 +89,7 @@ namespace ServerSide
 
         public IEnumerable<Message> RecieveMessage(RecieveMessageInfo GTO)
         {
-            //Tjekker på ens eget id og personen man skriver med
-            var output = db.Messages.Where(x => ((x.SenderPersonId == GTO.SenderId) && (x.RecipientPersonId == GTO.RecipientId) || (x.RecipientPersonId == GTO.SenderId) && (x.SenderPersonId == GTO.RecipientId))).ToList();
+            var output = db.Messages.Where(x => (x.SenderPersonId == GTO.SenderId && x.RecipientPersonId == GTO.RecipientId) || (x.RecipientPersonId == GTO.SenderId && x.SenderPersonId == GTO.RecipientId)).ToList();
             return output;
         }
         
