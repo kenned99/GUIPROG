@@ -2,6 +2,7 @@
 // for details on configuring this project to bundle and minify static web assets.
 var dataReuse;
 // Write your Javascript code.
+var messegesRunOnce = true;
 $(function () {
     if (("canvas").length > 0) {
 
@@ -116,6 +117,7 @@ $(function () {
         drawPosData();
         //setInterval(drawPosData, 10000);
         //setInterval(getLocation(), 10000);
+        
     }
 })
 
@@ -158,7 +160,6 @@ function showModal(recipientId) {
 }  
 
 function createMessageBox(messages) {
-   // console.log($('.messageBox'))
    // var messages = [{ "id": 2, "senderPersonId": 18, "recipientPersonId": 17, "messageText": "asd", "timeSent": "2020-05-14T12:08:30" }, { "id": 1, "senderPersonId": 17, "recipientPersonId": 18, "messageText": "sut mig", "timeSent": "2020-05-14T13:08:30" }, { "id": 3, "senderPersonId": 17, "recipientPersonId": 18, "messageText": "sdf", "timeSent": "2020-05-14T15:08:30" }]
     console.log(messages)
     $('.messageDiv').remove();
@@ -182,10 +183,16 @@ function GetMessages() {
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (data) {
-//            console.log(data);
+            console.log("opdateret messages")
             createMessageBox(data)
+
         }
     })
+    if (messegesRunOnce ) {
+        setInterval(GetMessages, 5000);
+        messegesRunOnce = false;
+    }
+
 }
 
 function SendMessage(MessageText) {
@@ -213,3 +220,4 @@ $(function () {
         SendMessage(MessageText);
     })
 })
+
