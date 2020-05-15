@@ -163,7 +163,11 @@ function createMessageBox(messages) {
     console.log(messages)
     $('.messageDiv').remove();
     $.each(messages, function (index, value) {
-        $('.messageBox').append('<div class="messageDiv">' + value.senderPersonId + ': ' + value.messageText + '</div>')
+        if (value.senderPersonId == parseInt($("#sessionUser").val())) {
+            $('.messageBox').append('<div class="messageDiv" style = "text-align: right">' + value.messageText + '</div>')
+        } else {
+            $('.messageBox').append('<div class="messageDiv">' + value.messageText + '</div>')
+        }
 
     })
    $('.messages').append()
