@@ -40,7 +40,8 @@ $(function () {
 
         function drawPosData(multiplier) {
 
-
+            var sessionUser = GetSpecificUser();
+            console.log(sessionUser);
 
             getPosData(multiplier);
 
@@ -56,12 +57,13 @@ $(function () {
         function getPosData(multiplier = 100) {
             $.get("/controller/api", function (data, status) {
 
-                var sessionUser = GetSpecificUser();
+                
                 
                 console.log(data);
+
                 var c = document.getElementById("canvas");
                 var ctx = c.getContext("2d");
-
+                
                 $(".table tr").remove();
                 $(".table").append("<tr><th>ID</th><th>Username</th><th>E-mail</th><th>Latitude</th><th>Longitude</th><th>Chat<th/></tr>");
                 $.each(data, function (index, value) {
