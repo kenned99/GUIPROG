@@ -89,8 +89,7 @@ namespace ServerSide
 
         public IEnumerable<Message> RecieveMessage(RecieveMessageInfo GTO)
         {
-
-            var output = db.Messages.Where(x => ((x.SenderPersonId == GTO.SenderId) && (x.RecipientPersonId == GTO.RecipientId) || (x.RecipientPersonId == GTO.SenderId) && (x.SenderPersonId == GTO.RecipientId))).ToList();
+            var output = db.Messages.Where(x => (x.SenderPersonId == GTO.SenderId && x.RecipientPersonId == GTO.RecipientId) || (x.RecipientPersonId == GTO.SenderId && x.SenderPersonId == GTO.RecipientId)).ToList();
             return output;
         }
         
