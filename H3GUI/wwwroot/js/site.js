@@ -96,8 +96,8 @@ $(function () {
                             
                             
                             canvasContext.beginPath();
-                            ctx.fillText(value.username, (x), (y));
-                            canvasContext.arc((canvas.height / 2) + (locationValue.longtitude), (canvas.width / 2) + (locationValue.latitude), 5, 0, 2 * Math.PI);
+                            ctx.fillText(value.username, (x), (y)-15);
+                            canvasContext.arc((canvas.height / 2), (canvas.width / 2), 5, 0, 2 * Math.PI);
 
                             canvasContext.fillStyle = 'blue';
                             canvasContext.fill();   
@@ -109,7 +109,7 @@ $(function () {
                             if(location)
                             ctx.font = "15px Arial";
                             //lat er vandret og long parameteren er lodret
-                            ctx.fillText(value.username, (x), (y));
+                            ctx.fillText(value.username, (x), (y)-15);
                             canvasContext.beginPath();
                             
                             canvasContext.arc(x, y , 5, 0, 2 * Math.PI);
