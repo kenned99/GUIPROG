@@ -40,7 +40,10 @@ $(function () {
         function drawPosData(multiplier) {
 
 
+
             getPosData(multiplier);
+
+
             canvasContext.clearRect(0, 0, canvas.width, canvas.height);
 
             var radius = Math.floor($(".container").width() / 20);
@@ -51,7 +54,9 @@ $(function () {
 
         function getPosData(multiplier = 100) {
             $.get("/controller/api", function (data, status) {
-                dataReuse = data;
+
+                var sessionUser = GetSpecificUser();
+                
                 console.log(data);
                 var c = document.getElementById("canvas");
                 var ctx = c.getContext("2d");
@@ -64,15 +69,14 @@ $(function () {
                     canvasHeight = (canvas.height / 2) * (multiplier / 100);
                     console.log(multiplier);
 
-
                     
-
+                    
                     $(".table").append("<tr><td> " + value.id + "</td > <td>" + value.username + "</td><td>" + value.email + "</td><td>" + (locationValue ? locationValue.latitude : "") + "</td><td>" + (locationValue ? locationValue.longtitude : "") + "</td><td><button onClick='showModal(" + value.id + ")' class='btn btn-primary' id='" + value.id + "'>Chat</button><td/></tr > ")
                     if (value.lastKnownLocation != null) {
-                        
+
 
                         if ($('#sessionUser').val() == value.id) {
-                            
+                           
                             ctx.font = "15px Arial";
                             
                             
@@ -88,14 +92,14 @@ $(function () {
                         } else {
 
                         //Randoes
-                        lat = value.lastKnownLocation.latitude + canvasHeight;
-                        long = value.lastKnownLocation.longtitude + canvasWidth;
+                        lat = value.lastKnownLocation.latitude - sessionUser.lastKnownLocation.latitude;
+                        long = value.lastKnownLocation.longtitude - sessionUser.lastKnownLocation.longtitude;
 
                         ctx.font = "15px Arial";
                         //lat er vandret og long parameteren er lodret
                         ctx.fillText(value.username, (lat - 12), (long + 20));
                         canvasContext.beginPath();
-                        canvasContext.arc(lat, long, 5, 0, 2 * Math.PI);
+                        canvasContext.arc(canvasHeight + lat, canvasWidth + long, 5, 0, 2 * Math.PI);
                         canvasContext.fillStyle = 'green';
                         canvasContext.fill();
                         canvasContext.lineWidth = 5;
@@ -129,7 +133,21 @@ function getLocation() {
         x.innerHTML = "Geolocation is not supported by this browser.";
     }
 }
-
+function GetSpecificUser() {
+    var SessionId = parseInt($("#sessionUser").val());
+    json = ({ "Id": SessionId }); //konventere om til JSON
+    console.log(json);
+    $.ajax({
+        url: "/controller/api/getSpecificUser", //sender det over til api
+        type: "GET",
+        data: json,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (data) {
+            return data;
+        }
+    })
+}
 
 //Finder localition
 function showPosition(position) {

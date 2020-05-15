@@ -28,7 +28,7 @@ namespace H3GUI.Pages.api
         {
             var data = serverSideAccess.GetMembersByName();
             foreach (var item in data)
-                if(item.LastKnownLocationId.HasValue)
+                if (item.LastKnownLocationId.HasValue)
                     item.LastKnownLocation = serverSideAccess.GetGpsLocation(item.LastKnownLocationId.Value);
 
             return data;
@@ -115,14 +115,14 @@ namespace H3GUI.Pages.api
         [Route("geoloc")]
         public DTOGps PostGpsLocation([FromBody] DTOGps gps)
         {
-            
+
 
             return serverSideAccess.AddGpsLoc(gps);
-          
+
             //Member.LastKnownLocation = gps;
             //serverSideAccess.UpdateMember(Member);
             //serverSideAccess.Commit();
-           
+
         }
 
         [HttpGet]
@@ -138,6 +138,17 @@ namespace H3GUI.Pages.api
         {
             serverSideAccess.SendMessage(DTO);
             return serverSideAccess.Commit();
+        }
+        [HttpGet]
+        [Route("getSpecificUser")]
+        public Member GetSpecificMember([FromQuery]int Id)
+        {
+            
+            var data = serverSideAccess.GetMember(Id);
+            if (data.LastKnownLocationId.HasValue)
+                data.LastKnownLocation = serverSideAccess.GetGpsLocation(data.LastKnownLocationId.Value);
+            return data;
+
         }
     }
 }
