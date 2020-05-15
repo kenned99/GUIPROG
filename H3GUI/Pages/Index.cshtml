@@ -178,7 +178,7 @@
             <td>@Mem.LastKnownLocation?.Latitude</td>
             <td>@Mem.LastKnownLocation?.Longtitude</td>
         </tr>
-    }   
+    }
 </table>
 
 
@@ -225,7 +225,7 @@
     <input type="range" min="100" max="100000" value="1" class="slider" id="myRange">
     <p>Value: <a id="sliderValue"></a></p>
 </div>
-    
+
 <script>
 
     var slider = document.getElementById("myRange");
@@ -235,17 +235,55 @@
     slider.oninput = function () {
         output.innerHTML = this.value;
     }
-    
+
 </script>
 
 
-<h3>MAP</h3>
+<h3>Canvas</h3>
 <input type="hidden" value="@Model.MemberId" id="sessionUser" />
 <div style=" display: block; margin: 0 auto;">
 
     <canvas id="canvas"
-        width="1000"
-        height="1000">
+            width="1000"
+            height="1000">
     </canvas>
 
+</div>
+
+<!--Modal (chat funktion)-->
+<div class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Chat</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <!--TODO: CHAT FUNKTIOn-->
+            <div class="modal-body">
+                <!--Attachtsments-->
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Upload</span>
+                    </div>
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="inputGroupFile01">
+                        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                    </div>
+                </div>
+                <div class="messageBox"></div>
+                <!--Chat text area-->
+                <div class="input-group">
+                    <div class="input-group-prepend"></div>
+                    <textarea class="form-control inputTextArea" aria-label="With textarea" placeholder="write your text here!"></textarea>
+                </div>
+                <input type="hidden" class="recipientId" />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary SendButton">Send</button>
+            </div>
+        </div>
+    </div>
 </div>
