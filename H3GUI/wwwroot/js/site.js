@@ -55,6 +55,7 @@ $(function () {
             responce = await fetch("/controller/api"); 
             return await responce.json()
         }
+        
         async function getPosData() {
             if (runonce1 == true) {
                 setInterval(RunGetscript, 20000);
@@ -67,8 +68,6 @@ $(function () {
             var c = document.getElementById("canvas");
             var ctx = c.getContext("2d");
                 
-            $(".table tr").remove();
-            $(".table").append("<tr><th>ID</th><th>Username</th><th>E-mail</th><th>Latitude</th><th>Longitude</th><th>Chat<th/></tr>");
 
             var clientWidth = canvas.parentElement.clientWidth
             var ratio = canvas.height / canvas.width;
@@ -89,7 +88,6 @@ $(function () {
 
 
 
-                $(".table").append("<tr><td> " + value.id + "</td > <td>" + value.username + "</td><td>" + value.email + "</td><td>" + (locationValue ? locationValue.latitude : "") + "</td><td>" + (locationValue ? locationValue.longtitude : "") + "</td><td><button onClick='showModal(" + value.id + ")' class='btn btn-primary' id='" + value.id + "'>Chat</button><td/></tr > ")
                 if (value.lastKnownLocation != null) {
 
                     x = ((locationValue.longtitude - sessionUser.lastKnownLocation.longtitude) * sliderValue) + (canvas.width / 2);
@@ -260,4 +258,8 @@ $(function () {
 function RunGetscript() {
     getData = true;
     runonce1 = false
+    $(".table tr").remove();
+    $(".table").append("<tr><th>ID</th><th>Username</th><th>E-mail</th><th>Latitude</th><th>Longitude</th><th>Chat<th/></tr>");
+    $(".table").append("<tr><td> " + value.id + "</td > <td>" + value.username + "</td><td>" + value.email + "</td><td>" + (locationValue ? locationValue.latitude : "") + "</td><td>" + (locationValue ? locationValue.longtitude : "") + "</td><td><button onClick='showModal(" + value.id + ")' class='btn btn-primary' id='" + value.id + "'>Chat</button><td/></tr > ")
+
 }
