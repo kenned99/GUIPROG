@@ -3,6 +3,8 @@
 var dataReuse;
 // Write your Javascript code.
 var messegesRunOnce = true;
+var getData = true;
+var runonce1 = true;
 $(function () {
     if (("canvas").length > 0) {
 
@@ -44,84 +46,86 @@ $(function () {
 
             getPosData(multiplier);
 
-
-            canvasContext.clearRect(0, 0, canvas.width, canvas.height);
-
             var radius = Math.floor($(".container").width() / 20);
             console.log(radius)
 
             console.log("redrew");
         }
+        async function GetDataAsynk() {
+            responce = await fetch("/controller/api"); 
+            return await responce.json()
+        }
+        async function getPosData() {
+            if (runonce1 == true) {
+                setInterval(RunGetscript, 20000);
+            }
+            if (getData == true) {
+                getData = await GetDataAsynk()
+            }
+            canvasContext.clearRect(0, 0, canvas.width, canvas.height);
 
-        function getPosData(multiplier = 100) {
-            $.get("/controller/api", function (data, status) {
+            var c = document.getElementById("canvas");
+            var ctx = c.getContext("2d");
+                
+            $(".table tr").remove();
+            $(".table").append("<tr><th>ID</th><th>Username</th><th>E-mail</th><th>Latitude</th><th>Longitude</th><th>Chat<th/></tr>");
+
+            var clientWidth = canvas.parentElement.clientWidth
+            var ratio = canvas.height / canvas.width;
+            var clientHeight = clientWidth * ratio;
+            var canvasWidth = clientWidth;
+            var canvasHeight = canvas.parentElement.clientHeight
+
+            sliderValue = parseInt($('#sliderValue').html())
+            userId = parseInt($('#sessionUser').val())
+                
+            var sessionUser = getData.find(x => x.id == userId);
 
                 
-                
-                console.log(data);
+            $.each(getData, function (index, value) {
+                locationValue = value.lastKnownLocation
 
-                var c = document.getElementById("canvas");
-                var ctx = c.getContext("2d");
-                
-                $(".table tr").remove();
-                $(".table").append("<tr><th>ID</th><th>Username</th><th>E-mail</th><th>Latitude</th><th>Longitude</th><th>Chat<th/></tr>");
-
-                var clientWidth = canvas.parentElement.clientWidth
-                var ratio = canvas.height / canvas.width;
-                var clientHeight = clientWidth * ratio;
-                var canvasWidth = clientWidth;
-                var canvasHeight = canvas.parentElement.clientHeight
-
-                sliderValue = parseInt($('#sliderValue').html())
-                userId = parseInt($('#sessionUser').val())
-                
-                var sessionUser = data.find(x => x.id == userId);
-
-                
-                $.each(data, function (index, value) {
-                    locationValue = value.lastKnownLocation
+                console.log("draw")
 
 
 
+                $(".table").append("<tr><td> " + value.id + "</td > <td>" + value.username + "</td><td>" + value.email + "</td><td>" + (locationValue ? locationValue.latitude : "") + "</td><td>" + (locationValue ? locationValue.longtitude : "") + "</td><td><button onClick='showModal(" + value.id + ")' class='btn btn-primary' id='" + value.id + "'>Chat</button><td/></tr > ")
+                if (value.lastKnownLocation != null) {
 
-                    $(".table").append("<tr><td> " + value.id + "</td > <td>" + value.username + "</td><td>" + value.email + "</td><td>" + (locationValue ? locationValue.latitude : "") + "</td><td>" + (locationValue ? locationValue.longtitude : "") + "</td><td><button onClick='showModal(" + value.id + ")' class='btn btn-primary' id='" + value.id + "'>Chat</button><td/></tr > ")
-                    if (value.lastKnownLocation != null) {
+                    x = ((locationValue.longtitude - sessionUser.lastKnownLocation.longtitude) * sliderValue) + (canvas.width / 2);
+                    y = ((sessionUser.lastKnownLocation.latitude - locationValue.latitude) * sliderValue) + (canvas.width / 2);
 
-                        x = ((locationValue.longtitude - sessionUser.lastKnownLocation.longtitude) * sliderValue) + (canvas.width / 2);
-                        y = ((sessionUser.lastKnownLocation.latitude - locationValue.latitude) * sliderValue) + (canvas.width / 2);
-
-                        if ($('#sessionUser').val() == value.id) {
+                    if ($('#sessionUser').val() == value.id) {
                            
-                            ctx.font = "15px Arial";
+                        ctx.font = "15px Arial";
                             
-                            
-                            canvasContext.beginPath();
-                            ctx.fillText(value.username, (x), (y)-15);
-                            canvasContext.arc((canvas.height / 2), (canvas.width / 2), 5, 0, 2 * Math.PI);
+                        canvasContext.beginPath();
+                        ctx.fillText(value.username, (x), (y)-15);
+                        canvasContext.arc((canvas.height / 2), (canvas.width / 2), 5, 0, 2 * Math.PI);
 
-                            canvasContext.fillStyle = 'blue';
-                            canvasContext.fill();   
-                            canvasContext.lineWidth = 5;
-                            canvasContext.stroke();
+                        canvasContext.fillStyle = 'blue';
+                        canvasContext.fill();   
+                        canvasContext.lineWidth = 5;
+                        canvasContext.stroke();
 
-                        } else {
+                    } else {
      
-                            if(location)
-                            ctx.font = "15px Arial";
-                            //lat er vandret og long parameteren er lodret
-                            ctx.fillText(value.username, (x), (y)-15);
-                            canvasContext.beginPath();
+                        if(location)
+                        ctx.font = "15px Arial";
+                        //lat er vandret og long parameteren er lodret
+                        ctx.fillText(value.username, (x), (y)-15);
+                        canvasContext.beginPath();
                             
-                            canvasContext.arc(x, y , 5, 0, 2 * Math.PI);
-                            canvasContext.fillStyle = 'green';
-                            canvasContext.fill();
-                            canvasContext.lineWidth = 5;
-                            canvasContext.stroke();
+                        canvasContext.arc(x, y , 5, 0, 2 * Math.PI);
+                        canvasContext.fillStyle = 'green';
+                        canvasContext.fill();
+                        canvasContext.lineWidth = 5;
+                        canvasContext.stroke();
                         
                         
-                        }
                     }
-                });
+                }
+                
             });
         }
 
@@ -222,6 +226,7 @@ function GetMessages() {
     })
     if (messegesRunOnce ) {
         setInterval(GetMessages, 5000);
+
         messegesRunOnce = false;
     }
 
@@ -252,4 +257,7 @@ $(function () {
         SendMessage(MessageText);
     })
 })
-
+function RunGetscript() {
+    getData = true;
+    runonce1 = false
+}
