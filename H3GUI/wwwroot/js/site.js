@@ -7,50 +7,40 @@ var getData = true;
 var runonce1 = true;
 async function GetDataAsynk() {
     responce = await fetch("/controller/api");
-    return await responce.json()
+    data = await responce.json()
+    return data;
 }
+
 $(function () {
-    setInterval(getLocation(), 10000);
 
     if (("canvas").length > 0) {
 
         var canvas = document.getElementById('canvas');
         var canvasContext = canvas.getContext('2d');
 
+        getPosData();
 
-        (function () {
 
-            drawPosData()
+        function resizeBoard() {
 
-            function resizeBoard() {
+            var clientWidth = canvas.parentElement.clientWidth;
+            var ratio = canvas.height / canvas.width;
+            var clientHeight = clientWidth * ratio;
 
-                var clientWidth = canvas.parentElement.clientWidth;
-                var ratio = canvas.height / canvas.width;
-                var clientHeight = clientWidth * ratio;
+            var newWidth = String(clientWidth + 'px');
+            var newHeight = String(clientHeight + 'px');
 
-                var newWidth = String(clientWidth + 'px');
-                var newHeight = String(clientHeight + 'px');
+            console.log(newWidth, newHeight);
 
-                console.log(newWidth, newHeight);
+            canvas.style.width = newWidth;
+            canvas.style.height = newHeight;
 
-                canvas.style.width = newWidth;
-                canvas.style.height = newHeight;
-                    
-                console.log('canvas: ', canvas.style.width, canvas.height);
-                drawPosData()
-            }
+            console.log('canvas: ', canvas.style.width, canvas.height);
+            getPosData()
 
             window.addEventListener('resize', resizeBoard, false);
-        })();
-
-
-        function drawPosData(multiplier) {
-
-
-            getPosData(multiplier);
-
-            var radius = Math.floor($(".container").width() / 20);
         }
+
 
         
         async function getPosData() {
@@ -59,8 +49,9 @@ $(function () {
                 getData = await GetDataAsynk()
             }
             if (runonce1 == true) {
-                setInterval(updateTable, 10000, getData);
                 setInterval(RunGetscript, 10000);
+                setInterval(getLocation, 10000);
+                runonce1 = false
             }
             canvasContext.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -128,30 +119,33 @@ $(function () {
         //Checks if bar value is changed
         slider.oninput = function () {
             output.innerHTML = this.value;
-            drawPosData(this.value);
+            getPosData();
         }
-        //setInterval(drawPosData, 10000);
+
 
         
     }
 
 })
 
-function updateTable(getData) {
-    runonce1 = false
+async function updateTable() {
+
+
+    data = await GetDataAsynk()
     $(".table tr").remove();
     $(".table").append("<tr><th>ID</th><th>Username</th><th>E-mail</th><th>Latitude</th><th>Longitude</th><th>Chat<th/></tr>");
-    $.each(getData, function (index, value) {
+    $.each(data, function (index, value) {
         locationValue = value.lastKnownLocation
         $(".table").append("<tr><td> " + value.id + "</td > <td>" + value.username + "</td><td>" + value.email + "</td><td>" + (locationValue ? locationValue.latitude : "") + "</td><td>" + (locationValue ? locationValue.longtitude : "") + "</td><td><button onClick='showModal(" + value.id + ")' class='btn btn-primary' id='" + value.id + "'>Chat</button><td/></tr > ")
     })
+
         
 }
 
 //bliver kørt når åbner index eller login
 function getLocation() {
     if (navigator.geolocation) {
-        navigator.geolocation.watchPosition(showPosition);
+        navigator.geolocation.getCurrentPosition(showPosition);
     }
 }
 
@@ -173,19 +167,22 @@ function showPosition(position) {
     lng = position.coords.longitude;
     userId = parseInt($('#sessionUser').val());
     json = JSON.stringify({ "userId": userId, "lat": lat, "lng": lng }); //konventere om til JSON
-    $.ajax({
-        url: "/controller/api/geoloc", //sender det over til api
-        type: "POST",
-        data: json,
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function () {
-            console.log("upload data");
-            // update table here
-            data = GetDataAsynk()
-            updateTable(data); 
-        }
-    })
+    if (userId>1 && lat > 0) {
+        $.ajax({
+            url: "/controller/api/geoloc", //sender det over til api
+            type: "POST",
+            data: json,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function () {
+                console.log("upload data");
+                // update table here
+
+            }
+        })
+        
+        updateTable(data);
+    }
 }
 
 //åbner modal og hiver fat i recipient Id
@@ -228,7 +225,7 @@ function GetMessages() {
 
         }
     })
-    if (messegesRunOnce ) {
+    if (messegesRunOnce) {
         setInterval(GetMessages, 5000);
 
         messegesRunOnce = false;
