@@ -5,21 +5,25 @@ var dataReuse;
 var messegesRunOnce = true;
 var getData = true;
 var runonce1 = true;
+async function GetDataAsynk() {
+    responce = await fetch("/controller/api");
+    return await responce.json()
+}
 $(function () {
+    setInterval(getLocation(), 10000);
+
     if (("canvas").length > 0) {
 
         var canvas = document.getElementById('canvas');
         var canvasContext = canvas.getContext('2d');
-        //setInterval(drawcircel(), 500);
 
 
         (function () {
 
-
+            drawPosData()
 
             function resizeBoard() {
-                //var clientWidth = 50;
-                //var clientHeight = 50;
+
                 var clientWidth = canvas.parentElement.clientWidth;
                 var ratio = canvas.height / canvas.width;
                 var clientHeight = clientWidth * ratio;
@@ -42,29 +46,21 @@ $(function () {
 
         function drawPosData(multiplier) {
 
-            console.log(sessionUser);
 
             getPosData(multiplier);
 
             var radius = Math.floor($(".container").width() / 20);
-            console.log(radius)
+        }
 
-            console.log("redrew");
-        }
-        async function GetDataAsynk() {
-            responce = await fetch("/controller/api"); 
-            return await responce.json()
-        }
         
         async function getPosData() {
 
             if (getData == true) {
                 getData = await GetDataAsynk()
-                
             }
             if (runonce1 == true) {
-                setInterval(updateTable(getData),20000);
-                setInterval(RunGetscript, 20000);
+                setInterval(updateTable, 10000, getData);
+                setInterval(RunGetscript, 10000);
             }
             canvasContext.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -87,7 +83,6 @@ $(function () {
             $.each(getData, function (index, value) {
                 locationValue = value.lastKnownLocation
 
-                console.log("draw")
 
 
 
@@ -132,33 +127,31 @@ $(function () {
 
         //Checks if bar value is changed
         slider.oninput = function () {
-            console.log("Value Changed!" + this.value);
             output.innerHTML = this.value;
             drawPosData(this.value);
         }
-        drawPosData();
         //setInterval(drawPosData, 10000);
-        //setInterval(getLocation(), 10000);
+
         
     }
+
 })
 
 function updateTable(getData) {
+    runonce1 = false
     $(".table tr").remove();
     $(".table").append("<tr><th>ID</th><th>Username</th><th>E-mail</th><th>Latitude</th><th>Longitude</th><th>Chat<th/></tr>");
     $.each(getData, function (index, value) {
         locationValue = value.lastKnownLocation
         $(".table").append("<tr><td> " + value.id + "</td > <td>" + value.username + "</td><td>" + value.email + "</td><td>" + (locationValue ? locationValue.latitude : "") + "</td><td>" + (locationValue ? locationValue.longtitude : "") + "</td><td><button onClick='showModal(" + value.id + ")' class='btn btn-primary' id='" + value.id + "'>Chat</button><td/></tr > ")
     })
-    runonce1 = false
+        
 }
 
 //bliver kørt når åbner index eller login
 function getLocation() {
     if (navigator.geolocation) {
         navigator.geolocation.watchPosition(showPosition);
-    } else {
-        x.innerHTML = "Geolocation is not supported by this browser.";
     }
 }
 
@@ -180,7 +173,6 @@ function showPosition(position) {
     lng = position.coords.longitude;
     userId = parseInt($('#sessionUser').val());
     json = JSON.stringify({ "userId": userId, "lat": lat, "lng": lng }); //konventere om til JSON
-    console.log(json);
     $.ajax({
         url: "/controller/api/geoloc", //sender det over til api
         type: "POST",
@@ -189,6 +181,9 @@ function showPosition(position) {
         dataType: "json",
         success: function () {
             console.log("upload data");
+            // update table here
+            data = GetDataAsynk()
+            updateTable(data); 
         }
     })
 }
@@ -270,3 +265,4 @@ function RunGetscript() {
     getData = true;
 
 }
+
